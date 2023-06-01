@@ -1,6 +1,5 @@
 import { Box, Flex, Image,Center, Input,Button,HStack,
-    MenuButton ,MenuList,MenuItem,Menu,InputLeftElement,InputGroup
-
+    MenuButton ,MenuList,MenuItem,Menu,InputLeftElement,InputGroup,Avatar
 
 } from '@chakra-ui/react'
 import React from 'react'
@@ -8,19 +7,31 @@ import {AiOutlineHeart,AiOutlineShoppingCart,AiOutlineSearch} from "react-icons/
 import { useDisclosure } from '@chakra-ui/react'
 import {GiHamburgerMenu} from "react-icons/gi"
 import {Link as RouteLink} from "react-router-dom"
-
-
-
-
-
+import {useDispatch, useSelector} from "react-redux"
+import Logout from './Logout'
+import ButtonSignup from './ButtonSignup'
+import Logout2 from './Logout2'
 
 
 const Navbar = () => {
 
+  const {token,data,wdata,totalCartItem,WishListData,name} = useSelector(store=>{
+    return{
+        token:store.userReducer.token,
+        data:store.cartReducer.data,
+        WishListData:store.wishListReducer.WishListData,
+        totalCartItem:store.cartReducer.totalCartItem,
+        name:store.userReducer.name,
+      
+    }
+})
+
+ console.log(WishListData.length,data.length)
+
   return (
     <>
     
-    <Flex w="100%" h="4rem"  bg="rgb(255,255,255)" justifyContent={'space-between'} position={'sticky'} zIndex={100} >
+    <Flex w="100%" h="4rem" bg="rgb(255,255,255)" justifyContent={'space-between'} position="sticky" top="0"  zIndex={100} >
 
  {/* <-----------------flex left part-------------------------> */}
       <Flex w={{base:"100%",sm:"100%",md:"100%",lg:"65%"}} h="100%"  justifyContent={{sm:"start",md:"start",lg:"space-between"}}   >
@@ -35,9 +46,31 @@ const Navbar = () => {
             <MenuItem>  <RouteLink to="/men" > MEN </RouteLink>      </MenuItem>
             <MenuItem>KIDS</MenuItem>
             <MenuItem>  <RouteLink to="/home" > HOME </RouteLink>  </MenuItem>
-            <MenuItem>CART <AiOutlineShoppingCart   />  </MenuItem>
-            <MenuItem>WISHLIST <AiOutlineHeart  />  </MenuItem>
-            <MenuItem> SIGNUP/SINGIN  </MenuItem>
+            <MenuItem>
+              <RouteLink to="/cart">
+               <Flex  fontSize="1.2rem" justifyContent="center" alignItems="center" >
+                Cart <AiOutlineShoppingCart fontSize="1.4rem"   />
+                <Center border="1px" borderRadius="50%" pos="absolute" fontSize="0.8rem" bg="rgb(192,0,0)" color="white" w="1.2rem" ml="4.2rem" mb="0.8rem" > u</Center>
+               </Flex>
+              </RouteLink>
+            </MenuItem>
+
+            <MenuItem>WISHLIST 
+             <RouteLink to="/wishlist" >
+               <Flex  fontSize="1.2rem" justifyContent="center" alignItems="center" >
+                <AiOutlineHeart  fontSize="1.4rem"   />
+                <Center border="1px" borderRadius="50%" pos="absolute" fontSize="0.8rem" bg="rgb(192,0,0)" color="white" w="1.2rem" ml="2rem" mb="0.8rem" > u</Center>
+               </Flex>
+             </RouteLink>
+            </MenuItem>
+
+           
+              <MenuItem>
+                {/* <RouteLink to="/signup" >  */}
+                    { token==""?  <ButtonSignup />: <Logout2 />     }
+                {/* </RouteLink> */}
+               </MenuItem>
+            
             </MenuList>
            </Menu>    
          </Center>
@@ -79,21 +112,36 @@ const Navbar = () => {
 
 {/* <-----------------flex right part-------------------------> */}
 
-        <Flex w="22%" h="100%"  justifyContent={'space-around'} display={{base:"none",sm:"none",md:"none",lg:"flex"}} >
+        <Flex w="26%" h="100%"  justifyContent={'space-around'} display={{base:"none",sm:"none",md:"none",lg:"flex"}} >
         <Center gap={5} fontSize="1.7rem" > 
            <Center>
-            <AiOutlineHeart  />
+           <RouteLink to="/wishlist" >  
+             <Flex>
+                <AiOutlineHeart  />
+                <Center border="1px" borderRadius="50%" pos="absolute" fontSize="0.8rem" bg="rgb(192,0,0)" color="white" w="1.2rem" ml="1.2rem"  > {token!="" ? WishListData.length : 0}</Center>
+             </Flex>
+           </RouteLink>  
           </Center>
           <Center>
-            <AiOutlineShoppingCart   />
+          <RouteLink to="/cart" >
+            <Flex>
+                <AiOutlineShoppingCart   />
+                <Center border="1px" borderRadius="50%" pos="absolute" fontSize="0.8rem" bg="rgb(192,0,0)" color="white" w="1.2rem" ml="1.2rem" > {token!=""? data.length :0} </Center>
+             </Flex>
+          </RouteLink>
           </Center>
         </Center> 
 
-        <Center w="17%" mt="0.4rem" h="75%" border="1px" borderRadius="50%"  >
-        </Center>
-        <Center  fontWeight="600" >
-            signup/signin
-        </Center>
+        {/* <Center w="16%" mt="0.4rem" h="78%" border="1px" borderRadius="50%"  > */}
+         <Avatar name={name? name :""} bg="gray" color="white" mt="0.3rem"  size={'md'} />
+        {/* </Center> */}
+       
+         <Center  fontWeight="600" h="85%" ml="0.5rem"  mt="0.1rem" >
+           {/* <RouteLink to="/signup" > */}
+                 { token==""?  <ButtonSignup />: <Logout   />     }
+            {/* </RouteLink> */}
+         </Center>
+        
 
         </Flex>
     </Flex>

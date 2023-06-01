@@ -1,0 +1,10 @@
+
+export const GET_Women_Success = "get/Women_success"
+export const GET_Women_Error = "get/Women_error"
+export const GET_Women_Loading = "get/Women_loading"
+export const GET_TotalItem = "get/TotalItem"
+export const GET_Page = "get/page"
+export const GET_Sort = "get/sort"
+export const GET_Category = "get/category"
+export const GET_Brand = "get/brand"
+export const GET_PageQuery = "get/pagequery"
