@@ -1,7 +1,7 @@
 import React from 'react'
 import {useDispatch,useSelector} from "react-redux"
-import { Error, GetSuccess, Loading, Sort, TotalItem,ByCategory, ByBrand, CurrentPage, PageQuery } from '../redux/women/action'
-import {Box, Center,Grid,GridItem, Flex, Text} from "@chakra-ui/react"
+import { woError, GetSuccess, woLoading, Sort, TotalItem,ByCategory, ByBrand, CurrentPage, PageQuery} from '../redux/women/action'
+import {Box, Center,Grid,GridItem, Flex, Text,Image} from "@chakra-ui/react"
 import Card from '../components/Card'
 import Pagination from '../components/Pagination'
 import Navbar from "../components/Navbar"
@@ -11,14 +11,17 @@ import { useSearchParams } from 'react-router-dom'
 import {Link as RouteLink} from "react-router-dom"
 import {Like} from "../redux/WishList/action"
 import {AiOutlineHeart} from "react-icons/ai"
+import Loader from '../components/Loader'
+import Error from '../components/Error'
+
 
 
 const Women = () => {
 
-  const {loading,error,data,currentPage,sort,category,brand,pageQuery,like} = useSelector((store)=>{
+  const {wo_loading,wo_error,data,currentPage,sort,category,brand,pageQuery,like} = useSelector((store)=>{
     return{
-        loading:store.womenReducer.loading,
-        error:store.womenReducer.error,
+        wo_loading:store.womenReducer.loading,
+        wo_error:store.womenReducer.error,
         data:store.womenReducer.data,
         currentPage:store.womenReducer.currentPage,
         sort:store.womenReducer.sort,
@@ -41,7 +44,7 @@ const Women = () => {
  
 
    const getWomenData=(currentPage,sort,category)=>{
-        Loading()
+        dispatch(woLoading())
         
         fetch(`https://long-lime-crab-garb.cyclic.app/women/get?sort=price&order=${sort}&page=${currentPage}&category=${category}&brand=${brand}`)
         .then((res)=>res.json())
@@ -51,7 +54,7 @@ const Women = () => {
         })
         .catch((err)=>{
             console.log(err)
-            Error()
+            dispatch(woError())
         })
    }
 
@@ -83,19 +86,22 @@ const Women = () => {
     console.log(like)
 
   return (
-    <Box>  
+  <>
+    {  wo_error==true? <Error /> :  wo_loading==true? <Loader /> :   
+      // <-----------------------------if loading false then this box will render------------------------------------------------------------>             
+       <Box>  
          
           <Navbar />
-           <Route gender="women" color="rgb(248,247,246)" />
+           {/* <Route gender="women" color="rgb(248,247,246)" /> */}
         
            <Box w="95%" m="auto"  >
               
                   <Pagination />
               
             
-                   <Flex  justifyContent={'space-between'} >
+                   <Flex  justifyContent={{base:"space-between",sm:"space-around",md:"space-around"}} >
 
-                        <Box w={{md:"30%",lg:"27%"}} bg="rgb(248,247,246)" pr="1.5rem" pl="1.5rem" >
+                        <Box w={{base:"50%",sm:"40%",md:"27%",lg:"27%"}} bg="rgb(248,247,246)" pr="1.5rem" pl="1.5rem" >
 
 
                              <Box textAlign="start" >
@@ -214,14 +220,14 @@ const Women = () => {
                         
 {/* <----------------------------------Right side -----------------------------------------> */}
 
-                        <Grid w={{md:"65%",lg:"72%"}} bg="rgb(248,247,246)" templateColumns={{base:"repeat(1,1fr)",md:"repeat(2,1fr)",lg:"repeat(3,1fr)"}} >
-                             { data &&
+                        <Grid w={{base:"50%",sm:"50%",md:"60%",lg:"72%"}}  templateColumns={{base:"repeat(1,1fr)",md:"repeat(2,1fr)",lg:"repeat(3,1fr)"}} gap="0.5rem" >
+                             { data.length!=0 &&
                                data.map((el,i)=>{
-                                     return <GridItem key={el._id} border="1px" h="30rem" p={3} borderColor="gray.200" >
+                                     return <GridItem key={el._id} border="1px"  borderColor="gray.200" >
 
-                                              <Center   pos="absolute" ml="-0.5rem" fontSize="2rem"  >
+                                              {/* <Center   pos="absolute" ml="-0.5rem" fontSize="2rem"  >
                                                   <AiOutlineHeart ref={ele=>{ref.current[i]=ele}}  onClick={()=>hanldeclick(i)}  />
-                                               </Center>
+                                               </Center> */}
 
                                                <RouteLink to={`/women/${el._id}`} >
                                                       <Card img={el.Image} title={el.Title} des={el.Name} price={el.price} originalprice={el.Sprice} 
@@ -244,7 +250,11 @@ const Women = () => {
 
          <Footer />
 
-    </Box>
+       </Box>
+
+
+    }
+  </>     
   )
 }
 

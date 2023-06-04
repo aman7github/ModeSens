@@ -2,19 +2,24 @@ import React from 'react'
 import Navbar from "../components/Navbar"
 import { Box, Flex,Text, Input,Button,RadioGroup,Stack,Divider,Radio,FormControl,Switch,VStack, Center } from '@chakra-ui/react'
 import {useDispatch, useSelector} from "react-redux"
-import { Address } from '../redux/Address/action'
+import { Address, adError, adLoading, chooseAddress } from '../redux/Address/action'
 import AddressBlock from '../components/AddressBlock'
 import {Link as RouterLink, useParams} from "react-router-dom"
 import { useLocation } from 'react-router-dom'
 import { DirectBuy, SingleDiscount } from '../redux/SingleProduct/action'
 import { ApplyCoupon } from '../redux/Cart/action'
+import Error from '../components/Error'
+import Loader from '../components/Loader'
+
 
 const Shiping = () => {
  
   const dispatch = useDispatch()
 
-  const {token,data,totalPrice,discount,payableAmount,directBuyData,singleShippingPrice,address} = useSelector(store=>{
+  const { ad_loading,ad_error, pincode2,token,data,totalPrice,discount,payableAmount,directBuyData,singleShippingPrice,address,finalorder,chooseaddress} = useSelector(store=>{
       return{
+          ad_loading:store.addressReducer.loading,
+          ad_error:store.addressReducer.error,
           address:store.addressReducer.address, 
           token:store.addressReducer.token,
           // pincode:store.cartReducer.pincode,
@@ -24,7 +29,10 @@ const Shiping = () => {
           data:store.cartReducer.data,
           directBuyData:store.singlePageReducer.directBuyData,
           singleShippingPrice:store.singlePageReducer.singleShippingPrice,
-          address:store.addressReducer.address
+          address:store.addressReducer.address,
+          finalorder:store.singlePageReducer.finalorder,
+          chooseaddress:store.addressReducer.chooseaddress,
+          pincode2:store.cartReducer.pincode,
       }
   })
   
@@ -81,7 +89,7 @@ const Shiping = () => {
       }).then(res=>res.json())
         .then(res=>{
           dispatch(Address(res.data))
-          console.log(res)
+          // console.log(res)
         })
         .catch((err)=>console.log(err))
 
@@ -90,6 +98,7 @@ const Shiping = () => {
 
    const location = useLocation()
    const {id} = useParams()
+  //  console.log("l",location)
  
           React.useEffect(()=>{
              if(id!=undefined){
@@ -114,21 +123,19 @@ const Shiping = () => {
                      })
              
                  }
+  
 
-          
-
-
-
-    
      //  <--------------------------------Get address----------------------------------------->
        React.useEffect(()=>{
         if(token!=""){
         getAddress()
         }
+
        },[]) 
 
 
      const getAddress=()=>{
+       dispatch(adLoading())
       fetch(`https://long-lime-crab-garb.cyclic.app/address/get`,{
         headers:{
           "Content-Type":"application/json",
@@ -140,15 +147,17 @@ const Shiping = () => {
           //console.log(res.msg)
           dispatch(Address(res.msg))
         })
-        .catch((err)=>console.log(err))
+        .catch((err)=>{console.log(err)
+          dispatch(adError())})
    }
+
+ 
+
    //  <--------------------------------delete address----------------------------------------->
 
  
 
 
-
-    //  <--------------------------------update address----------------------------------------->
 
 
   //<--------------------------select address------------------------------------>
@@ -164,30 +173,30 @@ const Shiping = () => {
                            ref.current[selectbtn].style.backgroundColor = 'white'
                
                        }
-                       setselectbtn(i)
+                       setselectbtn(prev=>i)
                        ref.current[i].style.color = 'white'
                        ref.current[i].style.backgroundColor = 'black'
                        ref.current[i].style.border = '1px solid black'
              
-                     
+                       
+                    
+                   
                       
                     }
 
-                    console.log("Ie",selectbtn)
-
-
-
-
-    console.log("ddd",address)
-
+                    console.log("v", address[selectbtn])
+     
+ 
 
    
 
   return (
-       <>
+       <>  { ad_error? <Error /> : ad_loading ? <Loader />:
+
+            <Box>
             <Navbar />
 
-            <Box w="80%" m="auto" mt="2rem" borderBottom="1px" pb="0.9rem" borderColor="gray.400" fontSize="1.5rem" textAlign="start" >
+            <Box w="85%" m="auto" mt="2rem" borderBottom="1px" pb="0.9rem" borderColor="gray.400" fontSize="1.5rem" textAlign="start" >
                Shipping & Payment
             </Box>
 
@@ -217,7 +226,7 @@ const Shiping = () => {
                           <Box w="48%" h="100%"  textAlign={'start'} >
                               <Text fontSize={{base:"0.8rem",sm:"1rem"}}  > Pincode </Text>
 
-                               <Input type="number" name="pincode"  border={'1px'} borderColor="gray.300" h="3.5rem" placeholder='Enter Your Pincode' value={pincode} onChange={handlechange} />
+                               <Input type="number" name="pincode"  border={'1px'} borderColor="gray.300" h="3.5rem" placeholder='Enter Your Pincode' value={pincode2.length!=0? pincode2: pincode } onChange={handlechange} />
                           </Box>
                           <Box w="48%" h="100%"   textAlign={'start'} >
                               <Text fontSize={{base:"0.8rem",sm:"1rem"}}  > City </Text>
@@ -233,7 +242,7 @@ const Shiping = () => {
                                <Input type="text" name="state"  border={'1px'} borderColor="gray.300" h="3.5rem" placeholder='Enter Your State' value={state} onChange={handlechange} />
                           </Box>
                           <Box w="48%" h="100%"   textAlign={'start'} >
-                              <Text fontSize={{base:"0.8rem",sm:"1rem"}}  > Building Number </Text>
+                              <Text fontSize={{base:"0.8rem",sm:"1rem"}}  > House Number </Text>
 
                                <Input type="text" name="building"  border={'1px'} borderColor="gray.300" h="3.5rem" placeholder='Enter Your Building Number' value={building} onChange={handlechange} />
                           </Box>
@@ -263,7 +272,7 @@ const Shiping = () => {
 
                                 {
                                   
-                                   address && address.map((el,i)=>{
+                                   address.length!=0 && address.map((el,i)=>{
                                      
                                        return <Flex key={i}  border="1px" borderColor={'gray'} mt="0.5rem" pl="1rem" pb="1rem"
                                                   onClick={()=>Size(i)}  > 
@@ -279,19 +288,19 @@ const Shiping = () => {
 
                                            <Flex ml="1rem" flexDirection={'column'} >
 
-                                          <Box  textAlign={'start'} fontSize={"1.2rem"}  >
+                                          <Box  textAlign={'start'} fontSize={{base:"0.9rem",md:"1.2rem"}}  >
                                               {el.name }
                                            </Box>
                          
-                                            <Box textAlign={'start'} fontSize={"1.2rem"} >
+                                            <Box textAlign={'start'} fontSize={{base:"0.9rem",md:"1.2rem"}} >
                                              {el.building} {el.street}  {el.pincode}
                                             </Box>
                          
-                                            <Box textAlign={'start'} fontSize={"1.2rem"}  >
+                                            <Box textAlign={'start'} fontSize={{base:"0.9rem",md:"1.2rem"}}  >
                                               {el.city} { el.state} {el.landmark}
                                             </Box>
                          
-                                            <Box textAlign={'start'} fontSize={"1.2rem"} >
+                                            <Box textAlign={'start'} fontSize={{base:"0.9rem",md:"1.2rem"}} >
                                                Mobile Number: {el.mobile}
                                              </Box>
                                              </Flex> 
@@ -312,36 +321,36 @@ const Shiping = () => {
 
       {/* <--------------------------------------------left part------------------------------------------------------------------> */}
 
-                <Box   w={{base:"100%",lg:"38%"}} m="auto" pl="1rem" pr="1rem" mt={{base:"1rem",lg:"0rem"}}  border="1px" borderColor="gray.300" h="100%rem" >
+                <Box   w={{base:"100%",lg:"38%"}} m="auto" pb="2rem" pl="1rem" pr="1rem" mt={{base:"1rem",lg:"0rem"}}  border="1px" borderColor="gray.300" h="100%rem" >
 
                             <Flex mt="1rem" justifyContent={'space-between'} >  
                               <Input w="70%" type="text" placeholder='Enter Coupon Code' value={coupon} onChange={(e)=>setCoupon(e.target.value)}  />
-                              <Button w="25%" bg="black" color="white" fontSize="1.1rem" onClick={getCoupon} _hover={{bg:"white",color:"black",border:"1px"}}  >Apply</Button>
+                              <Button w="25%" bg="black" color="white" fontSize={{base:"0.8rem",md:"1.1rem"}} onClick={getCoupon} _hover={{bg:"white",color:"black",border:"1px"}}  >Apply</Button>
                             </Flex>
 
                             <Flex mt="1rem" justifyContent={'space-between'} > 
-                                <Box textAlign={'start'} fontSize="1.1rem" fontWeight="500" >
+                                <Box textAlign={'start'} fontSize={{base:"1rem",md:"1.1rem"}} fontWeight="500" >
                                   Total Item 
                                </Box>
-                               <Box textAlign={'start'} fontSize="1.1rem" fontWeight="500" >
+                               <Box textAlign={'start'} fontSize={{base:"1rem",md:"1.1rem"}} fontWeight="500" >
                                  { directBuyData.length!=0? 1 : data.length}
                                </Box>
                             </Flex>
 
                             <Flex mt="1rem" justifyContent={'space-between'} > 
-                                 <Box textAlign={'start'} fontSize="1.1rem" fontWeight="500" >
+                                 <Box textAlign={'start'} fontSize={{base:"1rem",md:"1.1rem"}} fontWeight="500" >
                                    Total Price 
                                  </Box>
-                                 <Box textAlign={'start'} fontSize="1.1rem" fontWeight="500" >
+                                 <Box textAlign={'start'} fontSize={{base:"1rem",md:"1.1rem"}} fontWeight="500" >
                                    ₹{ directBuyData.length!=0? directBuyData.Sprice : totalPrice}
                                  </Box>
                             </Flex>
 
                              <Flex mt="1rem" justifyContent={'space-between'} > 
-                               <Box textAlign={'start'} fontSize="1.1rem" fontWeight="500" >
+                               <Box textAlign={'start'} fontSize={{base:"1rem",md:"1.1rem"}} fontWeight="500" >
                                  Discount
                                </Box>
-                               <Box textAlign={'start'} fontSize="1.1rem" fontWeight="500" >
+                               <Box textAlign={'start'} fontSize={{base:"1rem",md:"1.1rem"}} fontWeight="500" >
                                 ₹{ directBuyData.length!=0? (~~directBuyData.Sprice-~~directBuyData.price ): discount}
                                </Box>
                              </Flex>
@@ -349,19 +358,19 @@ const Shiping = () => {
                              <Divider mt="1rem" color="gray.300" orientation='horizontal' />
 
                              <Flex mt="1rem" justifyContent={'space-between'} > 
-                                <Box textAlign={'start'} fontSize="1.1rem" fontWeight="500" >
+                                <Box textAlign={'start'} fontSize={{base:"1rem",md:"1.1rem"}} fontWeight="500" >
                                      Payable Amount 
                                </Box>
-                               <Box textAlign={'start'} fontSize="1.1rem" color="rgb(192,0,0)" fontWeight="500" >
+                               <Box textAlign={'start'} fontSize={{base:"1rem",md:"1.1rem"}} color="rgb(192,0,0)" fontWeight="500" >
                                  ₹{ directBuyData.length!=0?  singleShippingPrice :  payableAmount}
                                </Box>
                              </Flex>
                 
-                             {/* <RouterLink to="/shipping" > */}
+                             <RouterLink to="/payment"   state={{num:selectbtn}} >
                                 <Button mt="3rem"  w="100%" bg="black" h="3rem" color="white" fontSize="1.1rem"_hover={{bg:"black",color:"white",border:"1px"}} >
                                   Proceed To Pay
                                 </Button>
-                             {/* </RouterLink> */}
+                             </RouterLink>
 
                </Box>
 
@@ -369,7 +378,9 @@ const Shiping = () => {
 
             </Flex>
     
-    
+            </Box>
+
+            }
        </>
   )
 }

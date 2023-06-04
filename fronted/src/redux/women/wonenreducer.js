@@ -3,7 +3,7 @@ import * as types from "./actionType"
 
 const intialstate={
 
- loading:false,
+ loading:true,
  error:false,
  data:[],
  totalItem:0,
@@ -28,22 +28,20 @@ switch(action.type){
     ...state,loading:false, error:false, data:action.payload
   }
   case types.GET_TotalItem:return{
-    ...state, totalItem:action.payload
+    ...state, totalItem:action.payload,loading:false, error:false
   }
   case types.GET_Page:
-    return{...state, currentPage:action.payload  }
+    return{...state, currentPage:action.payload,loading:false, error:false  }
 
   case types.GET_Sort:
-    return {...state, sort:action.payload }
+    return {...state, sort:action.payload ,loading:false, error:false}
 
    case types.GET_Category:
-     return {...state,category:action.payload} 
+     return {...state,category:action.payload,loading:false, error:false} 
     
    case types.GET_Brand:
-    return {...state,brand:action.payload}
+    return {...state,brand:action.payload,loading:false, error:false}
 
-    // case types.GET_PageQuery:
-    // return {...state,pageQuery:action.payload}  
 
 
     default: return state;

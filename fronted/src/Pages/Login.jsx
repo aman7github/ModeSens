@@ -7,7 +7,7 @@ import {AiFillHeart,AiOutlineEye,AiOutlineEyeInvisible,AiFillHome,AiOutlineHome}
 import {Link as RouterLink, useLocation} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 import { Name, Root, Success, Token } from '../redux/User/action'
-import {useNavigate} from "react-router-dom"
+import {useNavigate   } from "react-router-dom"
 import Logout from "../components/Logout"
 
 
@@ -47,8 +47,9 @@ const Login = () => {
  
      // <---------------------------------login---------------------------------------------> 
                
-
+                 const toast = useToast()
                  const location = useLocation()
+              
                  const navigate=useNavigate()
 
                  const login=()=>{
@@ -62,28 +63,32 @@ const Login = () => {
                         .then((res)=>{
                             dispatch(Token(res.token))
                             dispatch(Name(res.name))
-                            // if(val!=""){
-                            //   navigate(`${location.state.url}`)
-                            //  }
+                            navigate("/")
+                          
+                              
+                            toast({
+                              title:res.msg,
+                              duration:3000,
+                              isClosable:true,
+                              position:"top"
+                            })
  
                         }
                         ).catch((err)=>{
                            console.log(err)
+                          
                       
                         })
 
-                       
-
-
+        
                  }  
              
                 
 
-             const handlelogged=()=>{
-                 login()
-                
-         
-             }
+        
+              
+            
+             
 
             console.log("l",token)
        
@@ -93,7 +98,6 @@ const Login = () => {
   return (
        <>
             
-
 
             <Flex w="95%"  flexDirection={{base:"column",lg:"row"}}   m="auto" border="1px" justifyContent={'space-between'} >
 
@@ -202,10 +206,15 @@ const Login = () => {
                              </InputRightElement>
                        </InputGroup>
 
-
-                       <Button   w="55%" m="auto" mt="2rem" bg="black" h="3.3rem" color="white" borderRadius={'0'} fontSize="1.1rem"_hover={{bg:"black",color:"white",border:"1px"}} onClick={handlelogged} >
+                       {/* <RouterLink  to="/" > */}
+                       <Button    w="55%" m="auto" mt="2rem" bg="black" h="3.3rem" color="white" borderRadius={'0'} fontSize="1.1rem"_hover={{bg:"black",color:"white",border:"1px"}} onClick={login} >
+                        
                           LOG IN
+                        
                       </Button>
+                      {/* </RouterLink> */}
+                    
+
 
 
                       <RouterLink to="/signup" >

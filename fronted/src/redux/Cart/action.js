@@ -4,13 +4,13 @@
 import * as types from "./actionTypes"
 
 
-export const Loading=()=>{
+export const cLoading=()=>{
   return{
     type:types.GET_Cart_Loading
   }
 }
 
-export const Error=()=>{
+export const cError=()=>{
     return{
         type:types.GET_Cart_Error
     }
@@ -23,7 +23,7 @@ export const cSuccess=(payload)=>{
     }
 }
 
-export const Delete=(payload)=>{
+export const cDelete=(payload)=>{
   return{
     type:types.DELETE_Cart_Success,
     payload

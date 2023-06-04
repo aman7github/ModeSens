@@ -7,6 +7,7 @@ const initialstate={
     error:false,
     name:"",
     token:""
+
 }
 
 
@@ -26,6 +27,7 @@ switch(action.type){
       case types.GET_Token:
         return {...state,loading:false,error:false,token:action.payload}  
 
+     
     
         
   

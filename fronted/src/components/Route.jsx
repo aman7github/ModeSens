@@ -4,10 +4,10 @@ import React from 'react'
 const Route = ({gender,category,color}) => {
   return (
     <>
-          <Center w="95%" m="auto" h="3rem" bg={color} textAlign={'start'} color="gray" >
+          <Center w="95%" m="auto" mt="1rem" h="3rem" bg={color} textAlign={'start'} color="gray" >
             
             <Text  position={'absolute'} left="4rem" >
-               Modesens/{gender}/{category}
+               Modesens / {gender}
             </Text>
                  
             

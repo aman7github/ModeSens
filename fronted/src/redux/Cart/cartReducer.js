@@ -2,7 +2,7 @@
 import * as types from "./actionTypes"
 
 const intialstate={
-    loading:false,
+    loading:true,
     error:false,
     data:[],
     pincode:"",
@@ -31,17 +31,17 @@ switch(action.type){
         return {...state,loading:false,error:false,data:action.payload}
 
       case types.Post_Cart_Success:
-         return {...state,totalCartItem:state.data.length} 
+         return {...state,totalCartItem:state.data.length,loading:false,error:false} 
 
       case types.GET_Pincode:
-        return {...state,pincode:action.payload}  
+        return {...state,pincode:action.payload,loading:false,error:false}  
 
         case types.GET_TotalPrice:
           let count=0
           for(let i=0;i<state.data.length;i++){
              count+= Number(state.data[i].Sprice)*Number(state.data[i].Quantity)
           }
-          return {...state,totalPrice:count}
+          return {...state,totalPrice:count,loading:false,error:false}
 
         case types.GET_TotalDiscount:
           let count2=0
@@ -49,7 +49,7 @@ switch(action.type){
             count2+= (Number(state.data[i].Sprice*Number(state.data[i].Quantity)))-(Number(state.data[i].price*Number(state.data[i].Quantity)))
       
           }
-          return {...state,discount:count2}  
+          return {...state,discount:count2,loading:false,error:false}  
 
        
         
@@ -60,7 +60,7 @@ switch(action.type){
               let count3=state.totalPrice-state.discount
                count3=count3-Math.floor(count3*0.20)
     
-            return {...state,payableAmount:count3}    
+            return {...state,payableAmount:count3,loading:false,error:false}    
 
      default: return state
 }

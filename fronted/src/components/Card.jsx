@@ -49,16 +49,15 @@ const Card = ({img,title ,des,price,originalprice,arr,handleclick}) => {
   return (
     <>
             
-               <Box w="100%" h="100%" onClick={invoke}  >
-       
-                  <Image src={img} w="80%" m="auto" h="60%" ref={ref} onMouseOver={()=>myfun(arr)} onMouseOut={()=>leave(img)}  />
-                  <Center fontSize="1.3rem" fontWeight="500"  >{title}</Center>
-                  <Center color="gray" mt="0.5rem" paddingLeft={3} paddingRight={3} >{des}</Center>
-                  <Center mt="0.7rem" >  
-                    <Center color="rgb(192,0,0)"  >${price} (30% OFF) </Center> 
+               <Flex flexDirection={'column'} w="100%"  onClick={invoke} bg="rgb(248,247,246)"   >
+                  <Image src={img} w={{base:"100%",sm:"80%",md:"90%",lg:"70%"}} m="auto" h="18rem" ref={ref} onMouseOver={()=>myfun(arr)} onMouseOut={()=>leave(img)}  />
+                  <Center fontSize={{base:"0.7rem",sm:"1.1rem",md:"1.3rem"}} fontWeight="500"  >{title}</Center>
+                  <Center color="gray" mt="0.5rem" paddingLeft={3} paddingRight={3} fontSize={{base:"0.7rem",sm:"1rem"}} >{des}</Center>
+                  <Flex mt="0.7rem" flexDirection={{base:"column",sm:"row"}} m="auto" fontSize={{base:"0.9rem",sm:"1rem"}} >  
+                    <Center color="rgb(192,0,0)"  >${price} (30% OFF)  </Center> 
                     <Center  > - ${originalprice} </Center>    
-                 </Center>
-                 </Box>
+                 </Flex>
+                 </Flex>
 
 
     </>

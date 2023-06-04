@@ -4,7 +4,7 @@ import * as types from "./actionTypes"
 
 const intialstate={
     like:false,
-    loading:false,
+    loading:true,
     error:false,
     WishListData:[],
    
@@ -29,7 +29,7 @@ switch(action.type){
         return {...state,loading:false,error:false}
       
       case types.LIKE_WishList:
-        return {...state,like:!state.like}  
+        return {...state,like:!state.like,loading:false,error:false}  
 
      default: return state
 }

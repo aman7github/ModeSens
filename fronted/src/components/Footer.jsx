@@ -50,14 +50,14 @@ let arr=[{
     <SimpleGrid minChildWidth="10rem"   w="95%" m="auto" gap={2}   >
           {
              arr.map((el,i)=>{
-                return <Flex flexDirection="column" key={i} h="18rem"  gap={1} alignItems="start"  >
+                return <Flex flexDirection="column" key={i}   gap={1} alignItems="start"  >
                             <Box mt="3rem" mb="0.3rem" fontSize="1.2rem" fontWeight="450" >{el.Title}</Box>
-                            <Box color="gray" fontSize="1rem"  >{el.t1}</Box>
-                            <Box color="gray" fontSize="1rem"  >{el.t2}</Box>
-                            <Box color="gray" fontSize="1rem"  >{el.t3}</Box>
-                            <Box color="gray" fontSize="1rem"  >{el.t4}</Box>
-                            <Box color="gray" fontSize="1rem"  >{el.t5}</Box>
-                            <Box color="gray" fontSize="1rem"  >{el.t6}</Box>
+                            <Box color="gray" fontSize="1rem" textAlign={'start'}  >{el.t1}</Box>
+                            <Box color="gray" fontSize="1rem" textAlign={'start'}  >{el.t2}</Box>
+                            <Box color="gray" fontSize="1rem" textAlign={'start'}  >{el.t3}</Box>
+                            <Box color="gray" fontSize="1rem" textAlign={'start'}  >{el.t4}</Box>
+                            <Box color="gray" fontSize="1rem" textAlign={'start'}  >{el.t5}</Box>
+                            <Box color="gray" fontSize="1rem" textAlign={'start'}  >{el.t6}</Box>
                        </Flex>
              })
 
@@ -67,17 +67,17 @@ let arr=[{
 
     </SimpleGrid>
     
-    <Center color="gray" mb="2rem" fontSize="1.1rem" >When you purchase through links on our site, we may earn a commission</Center>
+    <Center color="gray" mt="5rem" mb="2rem" fontSize="1.1rem" >When you purchase through links on our site, we may earn a commission</Center>
     </Box>
 
-     <Flex  bg="rgb(255,255,255)" h="7rem" flexDirection={{base:"column",lg:"row"}} justifyContent="space-between" >
-           <Flex w="30%" >
-              <Image src="https://cdn.modesens.com/static/img/20180905footer_logo.svg" mt="2rem" w="20%" h="40%"  />
+     <Flex  bg="rgb(255,255,255)" h="7rem" flexDirection={{base:"column",md:"row"}} justifyContent="space-between" >
+           <Flex w={{base:"100%",md:"70%",lg:"30%"}} justifyContent="center" >
+              <Image src="https://cdn.modesens.com/static/img/20180905footer_logo.svg" mt="2rem" w={{base:"20%",md:"10%",lg:"20%"}} h="40%"  />
               <Center> © 2023, ModeSens Inc </Center>
            </Flex>
 
 
-           <Flex w="25%" h="100%"  justifyContent="center" alignItems="center" gap={5}  >
+           <Flex w={{base:"100%",md:"70%",lg:"25%"}} h="100%" justifyContent="center" pb="2rem" alignItems="center" gap={5}  >
             
                  <AiFillTwitterCircle  fontSize="2.7rem" />
                  <AiFillInstagram fontSize="2.7rem"   />

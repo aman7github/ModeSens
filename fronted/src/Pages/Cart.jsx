@@ -1,14 +1,17 @@
-import { Box,Flex, Image,Center,useToast, Input, Button,Divider } from '@chakra-ui/react'
+import { Box,Flex, Image,Center,useToast, Input, Button,Divider,Text } from '@chakra-ui/react'
 import React from 'react'
 import {useDispatch, useSelector} from "react-redux"
 import Navbar from '../components/Navbar'
 import CartItem from '../components/CartItem'
-import {Loading,cSuccess,Error,Pincode,TotalPrice,TotalDiscount,PayableAmount,ApplyCoupon, PostCart} from "../redux/Cart/action"
+import {cLoading,cSuccess,cError,Pincode,TotalPrice,TotalDiscount,PayableAmount,ApplyCoupon, PostCart, cDelete} from "../redux/Cart/action"
 import {wLoading,wSuccess,wError} from "../redux/WishList/action"
-import {Delete} from "../redux/Cart/action"
+
 import Footer from "../components/Footer"
 import {Link as RouterLink} from "react-router-dom"
 import { DirectBuy } from '../redux/SingleProduct/action'
+import Loader from '../components/Loader'
+import Error from '../components/Error'
+import Route from "../components/Route"
 
 const Cart = () => {
 
@@ -17,10 +20,10 @@ const Cart = () => {
 
     const dispatch = useDispatch()
 
-    const {loading,error,data,pincode,payableAmount,discount,totalPrice,token,directBuyData} = useSelector(store=>{
+    const {c_loading,c_error,data,pincode,payableAmount,discount,totalPrice,token,directBuyData} = useSelector(store=>{
         return{
-            loading:store.cartReducer.loading,
-            error:store.cartReducer.error,
+            c_loading:store.cartReducer.loading,
+            c_error:store.cartReducer.error,
             data:store.cartReducer.data,
             pincode:store.cartReducer.pincode,
             totalPrice:store.cartReducer.totalPrice,
@@ -40,7 +43,7 @@ const Cart = () => {
 
     
     const getCartData=()=>{
-        dispatch(Loading())
+        dispatch(cLoading())
         fetch(`https://long-lime-crab-garb.cyclic.app/cart/get`,{
           headers:{
             "Content-Type":"application/json",
@@ -57,7 +60,7 @@ const Cart = () => {
         })
         .catch((err)=>{
             console.log(err)
-            dispatch(Error())
+            dispatch(cError())
         })
    }
    
@@ -81,6 +84,7 @@ const Cart = () => {
       dispatch(TotalDiscount())
       dispatch(PayableAmount())
       dispatch(wSuccess(res.data))
+    
       
         console.log("a",res)
         toastWishlist({
@@ -111,7 +115,7 @@ const Cart = () => {
     })
     .then((res)=>res.json())
     .then((res)=>{
-        dispatch(Delete(res.data))
+        dispatch(cDelete(res.data))
         dispatch(TotalPrice())
         dispatch(TotalDiscount())
         dispatch(PayableAmount())
@@ -150,12 +154,21 @@ const Cart = () => {
      console.log("t",token,data)
    
   return (
-    <>    
-        <Navbar />
+    <>  
+    { c_error==true ? <Error /> : c_loading==true? <Loader /> :   
+      // <-----------------------------if loading false then this box will render------------------------------------------------------------>             
 
       
+       <Box>
 
-     <Box w="95%" m="auto" mt="2rem"   >
+        <Navbar />
+
+        <Box textAlign={'start'} bg="rgb(248,247,246)" p="0.5rem" fontSize={'1.3rem'} fontWeight={'500'} w="95%" m="auto"  mt="2rem"  >
+                CHECK YOUR CART
+            </Box>
+        {/* // <-----------------------------Cart box------------------------------------------------------------>              */}
+
+        <Box w="95%" m="auto" mt="3rem"   >
      
         <Flex flexDirection={{base:"column",lg:"row"}} m="auto" justifyContent={'space-between'}   >
            
@@ -165,7 +178,7 @@ const Cart = () => {
                    data && data.map((el,i)=>{
                        return <CartItem key={i} img={el.Image} title={el.Title} name={el.Name} price={el.price} Sprice={el.Sprice} size={el.Size} 
                                 quantity={el.Quantity}  id={el._id} data={el} btn1={"ADD TO WISHLIST"} btn2={"REMOVE FROM CART"} remove={remove} addDataWishList={addDataWishList} />
-                   })
+                   }) 
                 }
                
                   
@@ -242,11 +255,13 @@ const Cart = () => {
 
         </Flex>
   
-    </Box>
+        </Box>
+       
+        {/* // <-----------------------------footer------------------------------------------------------------>              */}
+        <Footer />
 
-
-      <Footer />
-    
+      </Box> 
+    }
     </>
   )
 }

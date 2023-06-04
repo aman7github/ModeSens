@@ -26,7 +26,7 @@ export default function S({card}) {
   return (
     <Box
       position={'relative'}
-      height={'600px'}
+      height={'100%'}
       width={'full'}
       overflow={'hidden'}>
       {/* CSS files for react-slick */}

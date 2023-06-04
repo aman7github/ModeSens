@@ -7,9 +7,10 @@ import Carousel from '../components/Carousel'
 import Category from '../components/Category'
 import FavouriteCategory from '../components/FavouriteCategory'
 import Footer from '../components/Footer'
-import { cSuccess } from '../redux/Cart/action'
-import { wSuccess } from '../redux/WishList/action'
+import { cLoading, cError,cSuccess } from '../redux/Cart/action'
+import { wSuccess,wError,wLoading } from '../redux/WishList/action'
 import {useDispatch, useSelector} from "react-redux"
+import Error from '../components/Error'
 
 const Home = () => {
 
@@ -26,9 +27,11 @@ const Home = () => {
 
     const dispatch = useDispatch()
 
-    const {token} = useSelector(store=>{
+    const {token,c_error,w_error} = useSelector(store=>{
         return{
-            token:store.userReducer.token
+            token:store.userReducer.token,
+            c_error:store.cartReducer.error,
+            w_error:store.wishListReducer.error
         }
     })
 
@@ -36,7 +39,7 @@ const Home = () => {
    
     // <--------------------------------get cart data to update in navbar ---------------------------------->
     const getCartData=()=>{
-    
+         dispatch(cLoading())
       fetch(`https://long-lime-crab-garb.cyclic.app/cart/get`,{
         headers:{
           "Content-Type":"application/json",
@@ -49,7 +52,7 @@ const Home = () => {
       })
       .catch((err)=>{
           console.log(err)
-          dispatch(Error())
+          dispatch(cError())
       })
  }
 
@@ -58,7 +61,7 @@ const Home = () => {
 
  
  const getWishListData=()=>{
-
+     dispatch(wLoading())
    fetch(`https://long-lime-crab-garb.cyclic.app/wishlist/get`,{
      headers:{
        "Content-Type":"application/json",
@@ -71,16 +74,22 @@ const Home = () => {
    })
    .catch((err)=>{
        console.log(err)
+       dispatch(wError())
    })
  }
 
  React.useState(()=>{
+  if(token.length!=0){
   getCartData()
   getWishListData()
+  }
 },[])
 
   return (
     <>
+    { c_error==true || w_error==true ? <Error /> :
+
+    <Box>
     <Navbar />
   {/* <-------------------------first container------------------------------------> */}
 
@@ -130,7 +139,8 @@ const Home = () => {
       <FavouriteCategory />
 
       <Footer />
-
+      </Box>
+    }
     </>
   )
 }

@@ -2,20 +2,22 @@ import React from 'react'
 import {useDispatch, useSelector} from "react-redux"
 import { wLoading,wSuccess,wError,wDelete } from '../redux/WishList/action'
 import Navbar from '../components/Navbar'
-import { Box, Flex,Grid, GridItem ,useToast} from '@chakra-ui/react'
+import { Box, Flex,Grid, GridItem ,useToast,Image,Text} from '@chakra-ui/react'
 import CartItem from '../components/CartItem'
 import Footer from '../components/Footer'
 import { cSuccess } from '../redux/Cart/action'
+import Loader from '../components/Loader'
+import Error from '../components/Error'
 
 
 const WishList = () => {
 
   const dispatch = useDispatch()
 
-  const {loading,error,WishListData,token} = useSelector(store=>{
+  const {w_loading,w_error,WishListData,token} = useSelector(store=>{
       return{
-          loading:store.wishListReducer.loading,
-          error:store.wishListReducer.error,
+          w_loading:store.wishListReducer.loading,
+          w_error:store.wishListReducer.error,
           WishListData:store.wishListReducer.WishListData,
           token:store.userReducer.token
       }
@@ -110,16 +112,19 @@ const WishList = () => {
 
   return (
     <>
+       { WishListData.length==0? <Error /> : w_error==true? <Error /> : w_loading==true? <Loader /> :   
+      // <-----------------------------if loading false then this box will render------------------------------------------------------------>             
+        <Box>
             <Navbar />
             
-            <Box textAlign={'start'} bg="rgb(248,247,246)" p="0.5rem" fontSize={'1.4rem'} fontWeight={'500'} w="90%" m="auto"  mt="2rem"  >
+            <Box textAlign={'start'} bg="rgb(248,247,246)" p="0.5rem" fontSize={'1.3rem'} fontWeight={'500'} w="90%" m="auto"  mt="2rem"  >
                 CHECK YOUR WISHLIST
             </Box>
         
-              <Grid templateColumns={{base:"repeat(1,1fr)",sm:"repeat(2,1fr)",md:"repeat(2,1fr)",lg:"repeat(2,1fr)",}} w="90%" m="auto"  mt="2rem" gap="1rem" >
+              <Grid templateColumns={{base:"repeat(1,1fr)",sm:"repeat(2,1fr)",md:"repeat(2,1fr)",lg:"repeat(2,1fr)",}} w="90%" m="auto"  mt="3rem" gap="1rem" >
 
              {
-                WishListData && WishListData.map((el,i)=>{
+                WishListData.length!=0 && WishListData.map((el,i)=>{
 
                     return <GridItem key={i}  border="1px" borderColor={'gray.300'}  >
                              <CartItem  img={el.Image} title={el.Title} name={el.Name} price={el.price} Sprice={el.Sprice} size={el.Size} 
@@ -130,15 +135,12 @@ const WishList = () => {
              }
             
                
-         </Grid>
+             </Grid>
 
-
-         <Footer />
+            <Footer />
     
-    
-    
-    
-    
+         </Box>
+      }
     
     </>
   )

@@ -12,6 +12,8 @@ import Signup from '../Pages/Signup'
 import Login from '../Pages/Login'
 import PrivateRoute from '../components/PrivateRoute'
 import Order from '../Pages/Order'
+import Payment from '../Pages/Payment'
+import InvalidRoute from '../components/InvalidRoute'
 
 
 
@@ -26,11 +28,14 @@ const AllRoutes = () => {
        <Route path="/men/:id" element={<SingleProductPage />} />
        <Route path="/cart" element={ <PrivateRoute>  <Cart /> </PrivateRoute>    } />
        <Route path="/wishlist" element={ <PrivateRoute> <WishList />  </PrivateRoute>   } />
-       <Route path="/shipping" element={<Shiping />} />
-       <Route path="/shipping/:id" element={<Shiping />} />
+       <Route path="/shipping" element={ <PrivateRoute> <Shiping /> </PrivateRoute> } />
+       <Route path="/shipping/:id" element={ <PrivateRoute> <Shiping /> </PrivateRoute>} />
        <Route path="/signup" element={<Signup />} />
        <Route path="/login" element={<Login />} />
-       <Route path="/order" element={<Order />} />
+       <Route path="/order" element={<PrivateRoute> <Order />  </PrivateRoute> } />
+       <Route path="/payment" element={<PrivateRoute><Payment /> </PrivateRoute> } />
+       <Route path="*" element={<Home />} />
+      
        
        
 

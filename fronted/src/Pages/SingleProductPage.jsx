@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { Error, Loading, QuantityDec, QuantityInc, Success } from '../redux/SingleProduct/action'
+import { sError, sLoading, QuantityDec, QuantityInc, sSuccess } from '../redux/SingleProduct/action'
 import {useDispatch, useSelector} from "react-redux"
 import Navbar from '../components/Navbar'
 import { Flex,Box, Text,Center, SimpleGrid,Image, VStack, useToast, Button   } from '@chakra-ui/react'
@@ -11,6 +11,10 @@ import Footer from '../components/Footer'
 import {cSuccess} from "../redux/Cart/action"
 import { wSuccess } from '../redux/WishList/action'
 import {Link as RouterLink} from "react-router-dom"
+import Loader from '../components/Loader'
+import { mError, mLoading } from '../redux/men/action'
+import { woError, woLoading } from '../redux/women/action'
+import Error from '../components/Error'
 
 
 const SingleProductPage = () => {
@@ -25,10 +29,10 @@ const SingleProductPage = () => {
     const {id} = useParams()
     const dispatch = useDispatch()
 
-    const {loading,error,data,quantity,token} = useSelector(store=>{
+    const {s_loading,s_error,data,quantity,token} = useSelector(store=>{
         return{
-            loading:store.singlePageReducer.loading,
-            error:store.singlePageReducer.error,
+            s_loading:store.singlePageReducer.loading,
+            s_error:store.singlePageReducer.error,
             data:store.singlePageReducer.data,
             quantity:store.singlePageReducer.quantity,
             token:store.userReducer.token
@@ -45,18 +49,20 @@ const SingleProductPage = () => {
 
 
     const getWomenData=()=>{
-         Loading()
+         dispatch(sLoading())
+
         fetch(`https://long-lime-crab-garb.cyclic.app/${a[1]}/get/${id}`)
         .then((res)=>res.json())
         .then((res)=>{
-             dispatch(Success(res.msg))
+             dispatch(sSuccess(res.msg))
              setimgdata(res.msg.arr)
              console.log("a",res)
           
         })
         .catch((err)=>{
             console.log(err)
-            Error()
+            dispatch(sError())
+          
         })
 
     }
@@ -74,7 +80,7 @@ const SingleProductPage = () => {
 
      const Size=(i)=>{
 
-        if(selectbtn!="" || selectbtn=="0"){
+        if(selectbtn!="" || selectbtn=="0" ){
             ref.current[selectbtn].style.color = 'white'
             ref.current[selectbtn].style.backgroundColor = 'black'
 
@@ -83,12 +89,12 @@ const SingleProductPage = () => {
         ref.current[i].style.color = 'black'
         ref.current[i].style.backgroundColor = 'white'
         ref.current[i].style.border = '1px solid black'
-        selectedItem=arr[i]
-        setselectbtn(i)
+        selectedItem=i
+        setselectbtn(prev=>i)
     
      }
        
-  
+        
 
      // <----------------------------------------Add Quantity------------------------------------------> 
 
@@ -113,9 +119,11 @@ const SingleProductPage = () => {
      const toast = useToast()
     
     const addToCart=()=>{
-        if(selectedItem!=""){
-        data.Size = selectedItem
-        data.Quantity = quantity
+ 
+        if(selectbtn!=""){
+          if(token.length!=0){
+         data.Size = selectbtn
+         data.Quantity = quantity
        fetch(`https://long-lime-crab-garb.cyclic.app/cart/add`,{
            method:"POST",
            body:JSON.stringify(addData),
@@ -141,13 +149,24 @@ const SingleProductPage = () => {
            console.log(err)
  
        })
+      }else{
+        toast({
+          title:"Login first",
+          duration:5000,
+          isClosable:true,
+          position:"top",
+          color:"red"
+        })
+
+      }
 
     }else{
         toast({
             title:"Select Your Size",
-            duration:5000,
+            duration:4000,
             isClosable:true,
-            position:"top"
+            position:"top",
+            color:"red"
           })
     }
    }
@@ -212,17 +231,21 @@ console.log(gender[1],id)
 
   return (
     <>
+    { s_error? <Error /> : s_loading==true? <Loader /> :   
+      // <-----------------------------if loading false then this box will render------------------------------------------------------------>             
+
+      <Box>
        <Navbar />
 
-       <Route gender="women" color="white"  />
+       <Route gender={`${a[1]}`+" / " +"singleproduct page"} color="white"  />
          
        {/* <--------------------------------------------first container------------------------------> */}
        
-            <Flex w="95%" m="auto" mt="2rem"  h="30rem" justifyContent={'space-between'} flexDirection={{base:'column',lg:'row'}} >
+            <Flex w="95%"  m="auto" mt="2rem"  justifyContent={'space-between'} flexDirection={{base:'column',lg:'row'}} >
                  
-                 <Flex  w={{base:"80%",md:"60%",lg:"30%"}} h="100%" m="auto"   >
+                 <Flex  w={{base:"80%",md:"60%",lg:"30%"}} h="100%" m="auto"    >
                      <S  card={imgdata}  />
-                     <AiOutlineHeart cursor={'pointer'} fontSize="2.2rem" onClick={addToWishList}  />
+                     {/* <AiOutlineHeart cursor={'pointer'} fontSize="2.2rem" onClick={addToWishList}  /> */}
                  </Flex>
 
 
@@ -247,7 +270,8 @@ console.log(gender[1],id)
 
 
                           <Flex justifyContent={'start'} mt="1rem" gap={"0.5rem"}    >
-                            {
+                            {  
+                              
                                 arr.map((el,i)=>{
                                     return  <Center key={i} cursor="pointer" h="3rem" w="3rem" fontSize="1.2rem"
                                      bg="black" color="white" fontWeight="400" ref={ ele=>{ref.current[i]=ele}} onClick={()=>Size(i)} >{el}</Center>
@@ -271,12 +295,13 @@ console.log(gender[1],id)
                                 ADD TO CART
                             </Center>
 
-                            <Button border="1px"  w={{base:"100%",md:"60%",lg:"40%"}} h="3rem" bg="black" color="white" fontSize="1rem" 
-                             fontWeight="bold" cursor="pointer" borderRadius={0} isDisabled={selectbtn==""?true:false}  _hover={{bg:"black",color:"white"}}  >
-                              <RouterLink to={`/shipping/${id}`} state={{gender:gender[1]}} >
+                            <Box   w={{base:"100%",md:"60%",lg:"40%"}}  fontSize="1rem"     >
+                             <RouterLink to={`/shipping/${id}`} state={{gender:gender[1]}} >
+                              <Button w="100%"  bg="black" color="white" _hover={{bg:"black",color:"white"}} h="3rem"   cursor="pointer" fontWeight="bold" isDisabled={selectbtn==""?true:false} borderRadius={0}>
                                 BUY NOW
-                              </RouterLink>
-                            </Button>
+                              </Button>
+                             </RouterLink>
+                            </Box>
                           </Flex>
 
                  </Box>
@@ -287,7 +312,7 @@ console.log(gender[1],id)
 
     {/* <--------------------------------------------second container------------------------------> */}
 
-    <Box w="95%" h="15rem"  m="auto" mt={{base:"31rem",lg:"2rem"}} >
+    <Box w="95%" h="15rem"  m="auto" mt="1rem" >
       <Box textAlign={'start'} > 
         <Text pos={'absolute'} mt="5rem" left={{base:"2rem",md:"3rem",lg:"5rem"}} color="white" fontSize={{base:"1.5rem",lg:"2rem"}} fontWeight="400"  >
            Sale Starts Now
@@ -302,25 +327,14 @@ console.log(gender[1],id)
 
 
 
-  
-       
-       
-
-
-
-
-
   {/* <-----------------------------------------Footer---------------------------------------------> */}
 
       <Footer />
 
 
+    </Box>
 
-
-
-
-
-
+      }
     </>
   )
 }

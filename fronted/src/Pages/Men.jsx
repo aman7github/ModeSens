@@ -1,7 +1,7 @@
 import React from 'react'
 import {useDispatch,useSelector} from "react-redux"
-import { Error, GetSuccess, Loading, Sort, TotalItem,ByCategory, ByBrand } from '../redux/men/action'
-import {Box, Center,Grid,GridItem, Flex, Text} from "@chakra-ui/react"
+import { mError, GetSuccess, mLoading, Sort, TotalItem,ByCategory, ByBrand } from '../redux/men/action'
+import {Box, Center,Grid,GridItem, Flex, Text,Image} from "@chakra-ui/react"
 import Card from '../components/Card'
 import Pagination from '../components/Pagination'
 import Navbar from "../components/Navbar"
@@ -9,23 +9,24 @@ import Route from '../components/Route'
 import Footer from "../components/Footer"
 import {Link as RouteLink} from "react-router-dom"
 import {AiOutlineHeart} from "react-icons/ai"
+import Loader from '../components/Loader'
+import Error from '../components/Error'
 
 
 
 
   const Men=()=>{
 
-  const {loading,error,data,currentPage,sort,category,brand,like} = useSelector((store)=>{
+  const {m_loading,m_error,data,currentPage,sort,category,brand,like} = useSelector((store)=>{
     return{
-        loading:store.menReducer.loading,
-        error:store.menReducer.error,
+        m_loading:store.menReducer.loading,
+        m_error:store.menReducer.error,
         data:store.menReducer.data,
         currentPage:store.menReducer.currentPage,
         sort:store.menReducer.sort,
         category:store.menReducer.category,
         brand:store.menReducer.brand,
         like:store.wishListReducer.like
-    
     }
   })
 
@@ -35,26 +36,25 @@ import {AiOutlineHeart} from "react-icons/ai"
 
    React.useEffect(()=>{
        getWomenData(currentPage,sort,category,brand)
-  
    },[currentPage,sort,category,brand])
   
  
 
    const getWomenData=(currentPage,sort,category)=>{
-        Loading()
-        
+        dispatch(mLoading())
         fetch(`https://long-lime-crab-garb.cyclic.app/men/get?sort=price&order=${sort}&page=${currentPage}&category=${category}&brand=${brand}`)
         .then((res)=>res.json())
         .then((res)=>{
-            console.log(res)
+          //  console.log(res)
             dispatch(GetSuccess(res.msg))
             dispatch(TotalItem(res.totalItems)) 
         })
         .catch((err)=>{
             console.log(err)
-            Error()
+           dispatch(mError())
         })
    }
+   
 
     const Sortbyprice=(val)=>{
        dispatch(Sort(val))
@@ -71,32 +71,23 @@ import {AiOutlineHeart} from "react-icons/ai"
   
 
 
+  return ( 
+   <>
+   {  m_error==true? <Error /> : m_loading==true? <Loader /> :   
+      // <-----------------------------if loading false then this box will render------------------------------------------------------------>             
+      <Box>  
 
+           <Navbar />
+           {/* <Route gender="men" color="rgb(248,247,246)" /> */}
 
-  // <------------------------------------------wishlis heart sym-------------------------------->
-        const ref= React.useRef([])
-
-       const hanldeclick=(i)=>{
-         console.log(ref.current[i])
-       }
-     
-   
-    console.log(data)
-
-  return (
-    <Box>  
-         
-          <Navbar />
-           <Route gender="women" color="rgb(248,247,246)" />
-        
-           <Box w="95%" m="auto"  >
+           <Box w={{base:"100%",sd:"95%"}} m="auto"  >
               
                   <Pagination />
               
             
-                   <Flex  justifyContent={'space-between'} >
+                   <Flex  justifyContent={{base:"space-between",sm:"space-around",md:"space-around"}} >
 
-                        <Box w={{md:"30%",lg:"27%"}} bg="rgb(248,247,246)" pr="1.5rem" pl="1.5rem" >
+                        <Box w={{base:"50%",sm:"40%",md:"27%",lg:"27%"}} bg="rgb(248,247,246)" pr="1.5rem" pl="1.5rem" >
 
 
                              <Box textAlign="start" >
@@ -208,21 +199,21 @@ import {AiOutlineHeart} from "react-icons/ai"
                                         KAPPA
                                      </Center>
                                   </Grid>
-                             </Box>
+                             </Box> 
                          
                      
                         </Box> 
                         
 {/* <----------------------------------Right side -----------------------------------------> */}
 
-                        <Grid w={{md:"65%",lg:"72%"}} bg="rgb(248,247,246)" templateColumns={{base:"repeat(1,1fr)",md:"repeat(2,1fr)",lg:"repeat(3,1fr)"}} >
+                        <Grid w={{base:"50%",sm:"50%",md:"60%",lg:"72%"}} templateColumns={{base:"repeat(1,1fr)",md:"repeat(2,1fr)",lg:"repeat(3,1fr)"}} gap="0.5rem" >
                              { data &&
                                data.map((el,i)=>{
-                                     return <GridItem key={el._id} border="1px" h="30rem" p={3} borderColor="gray.200" >
+                                     return <GridItem key={el._id} border="1px"   borderColor="gray.200" >
 
-                                              <Center   pos="absolute" ml="-0.5rem" fontSize="2rem"  >
-                                                  <AiOutlineHeart ref={ele=>{ref.current[i]=ele}}  onClick={()=>hanldeclick(i)}  />
-                                               </Center>
+                                              {/* <Center   pos="absolute" ml="-0.5rem" fontSize="2rem"  >
+                                                  <AiOutlineHeart   />
+                                               </Center> */}
 
                                                <RouteLink to={`/men/${el._id}`} >
                                                       <Card img={el.Image} title={el.Title} des={el.Name} price={el.price} originalprice={el.Sprice} 
@@ -239,14 +230,20 @@ import {AiOutlineHeart} from "react-icons/ai"
 
 
 
-         </Box>
+           </Box>
+          
+          <Pagination />
 
-         <Pagination />
+          <Footer />
+                           
+      </Box>
+   }
 
-         <Footer />
 
-    </Box>
+ </>
+
   )
+
 }
 
 

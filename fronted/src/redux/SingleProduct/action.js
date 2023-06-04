@@ -2,19 +2,19 @@
 import * as types from "./actionTypes"
 
 
-export const Loading=()=>{
+export const sLoading=()=>{
   return{
     type:types.GET_SinglePage_Loading
   }
 }
 
-export const Error=()=>{
+export const sError=()=>{
     return{
         type:types.GET_SinglePage_Error
     }
 }
 
-export const Success=(payload)=>{
+export const sSuccess=(payload)=>{
     return{
         type:types.GET_SinglePage_Success,
         payload
@@ -45,3 +45,26 @@ export const SingleDiscount=()=>{
       type:types.GET_SingleDiscount,
   }
 }
+
+export const FinalOrder1=(payload)=>{
+  return{
+      type:types.Final_Order1,
+      payload
+      
+  }
+}
+
+export const FinalOrder2=(payload)=>{
+  return{
+      type:types.Final_Order2,
+      payload
+      
+  }
+}
+
+export const RemoveFinalOrder=()=>{
+  return{
+      type:types.Remove_FinalOrder
+  }
+}
+

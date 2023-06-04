@@ -43,7 +43,7 @@ const Pagination = () => {
 
 
   return (
-        <Center ml="2rem" paddingBottom="1rem" paddingTop="1rem" >
+        <Center ml="2rem" paddingBottom="1rem" paddingTop="1rem" mt="2rem" >
          <Flex  w={{base:"40%",lg:"20%"}}>
             {
               arr.map((el,i)=>{

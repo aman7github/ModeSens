@@ -1,13 +1,13 @@
 import * as types from "./actionType"
 
 
-export const Error = ()=>{
+export const woError = ()=>{
     return{
         type:types.GET_Women_Error
     }
 }
 
-export const Loading=()=>{
+export const woLoading=()=>{
     return{
         type:types.GET_Women_Loading
     }

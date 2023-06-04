@@ -3,6 +3,8 @@ import {useDispatch, useSelector} from "react-redux"
 import {Flex, Box,Popover,PopoverTrigger,PopoverContent,PopoverArrow,Button ,Portal,
   PopoverBody,PopoverCloseButton ,PopoverHeader,Center    } from "@chakra-ui/react"
   import {doLogout} from "../redux/User/action"
+  import {BsFillBagCheckFill} from "react-icons/bs"
+  import {Link as RouterLink} from "react-router-dom"
 
 const Logout = ({w,h,ml,mt}) => {
 
@@ -23,7 +25,16 @@ const Logout = ({w,h,ml,mt}) => {
    console.log("t",token)
 
   return (
-  <Box w="3rem" h="3rem" ml="-2rem" mt="1.5rem"  zIndex={500} >
+  <Flex w="6rem" h="3rem" ml="-0.9rem" zIndex={500} gap="0.9rem" >
+
+        <Center     >
+          <RouterLink to="/order" >
+             <BsFillBagCheckFill  fontSize={'1.6rem'}  border="1px" />
+          </RouterLink>
+        </Center>
+
+
+
       <Popover>
        <PopoverTrigger>
          <Center  cursor={'pointer'} >Logout</Center>
@@ -41,10 +52,12 @@ const Logout = ({w,h,ml,mt}) => {
        </PopoverContent>
   </Portal>
 </Popover>
+
+      
              
     
     
-     </Box>
+     </Flex>
   )
 }
 

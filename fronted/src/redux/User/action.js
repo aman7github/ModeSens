@@ -22,10 +22,5 @@ export const Token=(payload)=>{
     }
 }
 
-// export const Root=(paylaod)=>{
-//     return{
-//         type:types.GET_Root,
-//         paylaod
-//     }
-// }
+
 
