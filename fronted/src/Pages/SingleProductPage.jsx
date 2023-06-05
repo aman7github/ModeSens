@@ -148,13 +148,7 @@ const SingleProductPage = () => {
        })
        .catch((err)=>{
            console.log(err)
-           toast({
-            title:res.msg,
-            duration:5000,
-            isClosable:true,
-            position:"top"
-          })
- 
+          
        })
       }else{
         toast({
