@@ -56,7 +56,7 @@ const SingleProductPage = () => {
         .then((res)=>{
              dispatch(sSuccess(res.msg))
              setimgdata(res.msg.arr)
-             console.log("a",res)
+        
           
         })
         .catch((err)=>{
@@ -137,7 +137,7 @@ const SingleProductPage = () => {
         dispatch(cSuccess(res.data))
         dispatch(PostCart(res.data))
 
-           console.log(res)
+     
            toast({
              title:res.msg,
              duration:5000,
@@ -201,7 +201,7 @@ const addToWishList=()=>{
    })
    .then((res)=>res.json())
    .then((res)=>{
-       console.log(res)
+    
        dispatch(wSuccess(res.data))
       
        toastWishlist({
