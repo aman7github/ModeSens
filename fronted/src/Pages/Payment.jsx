@@ -155,12 +155,12 @@ console.log(detail)
 // <-----------------------------toast after placed order--------------------------------------------------->
 
      const infoOfOderPlaced=()=>{
-      // toast({
-      //   title:"your order is placed ..Now you are in your order section",
-      //   duration:5000,
-      //   isClosable:true,
-      //   position:"top"
-      // })
+      toast({
+        title:"your order is placed ..Now you are in your order section",
+        duration:5000,
+        isClosable:true,
+        position:"top"
+      })
       onClose()
 
      }

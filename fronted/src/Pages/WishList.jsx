@@ -14,12 +14,14 @@ const WishList = () => {
 
   const dispatch = useDispatch()
 
-  const {w_loading,w_error,WishListData,token} = useSelector(store=>{
+  const {w_loading,w_error,WishListData,token,totalWishListItem,totalCartItem} = useSelector(store=>{
       return{
           w_loading:store.wishListReducer.loading,
           w_error:store.wishListReducer.error,
           WishListData:store.wishListReducer.WishListData,
-          token:store.userReducer.token
+          token:store.userReducer.token,
+          totalCartItem:store.cartReducer.totalCartItem,
+          totalWishListItem:store.wishListReducer.totalWishListItem
       }
   })
   
@@ -104,15 +106,11 @@ const WishList = () => {
 
 
 
-  console.log("t",token)
-
-
-
 
 
   return (
     <>
-       { WishListData.length==0? <Error /> : w_error==true? <Error /> : w_loading==true? <Loader /> :   
+       {  w_loading==true? <Loader /> :   
       // <-----------------------------if loading false then this box will render------------------------------------------------------------>             
         <Box>
             <Navbar />
@@ -124,13 +122,13 @@ const WishList = () => {
               <Grid templateColumns={{base:"repeat(1,1fr)",sm:"repeat(2,1fr)",md:"repeat(2,1fr)",lg:"repeat(2,1fr)",}} w="90%" m="auto"  mt="3rem" gap="1rem" >
 
              {
-                WishListData.length!=0 && WishListData.map((el,i)=>{
+                 WishListData.map((el,i)=>{
 
                     return <GridItem key={i}  border="1px" borderColor={'gray.300'}  >
                              <CartItem  img={el.Image} title={el.Title} name={el.Name} price={el.price} Sprice={el.Sprice} size={el.Size} 
                                quantity={el.Quantity} btn1={"ADD TO CART"} btn2={"REMOVE"} id={el._id} data={el} remove={remove} addDataWishList={addToCart}  />
                            </GridItem>
-                })
+                }) 
 
              }
             

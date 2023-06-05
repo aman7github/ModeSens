@@ -20,7 +20,7 @@ const Cart = () => {
 
     const dispatch = useDispatch()
 
-    const {c_loading,c_error,data,pincode,payableAmount,discount,totalPrice,token,directBuyData} = useSelector(store=>{
+    const {c_loading,c_error,data,pincode,payableAmount,discount,totalPrice,token,directBuyData,totalCartItem} = useSelector(store=>{
         return{
             c_loading:store.cartReducer.loading,
             c_error:store.cartReducer.error,
@@ -30,7 +30,8 @@ const Cart = () => {
             discount:store.cartReducer.discount,
             payableAmount:store.cartReducer.payableAmount,
             token:store.userReducer.token,
-            directBuyData:store.singlePageReducer.directBuyData
+            directBuyData:store.singlePageReducer.directBuyData,
+            totalCartItem:store.cartReducer.totalCartItem,
            
         }
     })
@@ -38,6 +39,7 @@ const Cart = () => {
     
   
     React.useEffect(()=>{
+      
         getCartData()     
     },[])
 
@@ -149,13 +151,13 @@ const Cart = () => {
             dispatch(DirectBuy([]))
            }
 
+    console.log(data)
 
-
-     console.log("t",token,data)
+   
    
   return (
     <>  
-    { c_error==true ? <Error /> : c_loading==true? <Loader /> :   
+    {  c_loading==true? <Loader /> :   
       // <-----------------------------if loading false then this box will render------------------------------------------------------------>             
 
       
@@ -175,11 +177,11 @@ const Cart = () => {
             <Box w={{base:"100%",md:"90%",lg:"65%"}} m="auto" borderColor={'green'} >
 
                 {
-                   data && data.map((el,i)=>{
+                    data.map((el,i)=>{
                        return <CartItem key={i} img={el.Image} title={el.Title} name={el.Name} price={el.price} Sprice={el.Sprice} size={el.Size} 
                                 quantity={el.Quantity}  id={el._id} data={el} btn1={"ADD TO WISHLIST"} btn2={"REMOVE FROM CART"} remove={remove} addDataWishList={addDataWishList} />
-                   }) 
-                }
+                   })
+                } 
                
                   
             </Box>
@@ -210,7 +212,7 @@ const Cart = () => {
                      Total Item 
                    </Box>
                    <Box textAlign={'start'} fontSize="1.1rem" fontWeight="500" >
-                     {data && data.length}
+                     {totalCartItem}
                    </Box>
                 </Flex>
 

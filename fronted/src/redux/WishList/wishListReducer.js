@@ -7,6 +7,7 @@ const intialstate={
     loading:true,
     error:false,
     WishListData:[],
+    totalWishListItem:0
    
   
 }
@@ -23,10 +24,10 @@ switch(action.type){
         return {...state,loading:false,error:true}
      
       case types.GET_WishList_Success:
-        return {...state,loading:false,error:false, WishListData:action.payload}  
+        return {...state,loading:false,error:false, WishListData:action.payload,totalWishListItem:action.payload.length}  
   
       case types.DELETE_WishList:
-        return {...state,loading:false,error:false}
+        return {...state,loading:false,error:false,totalWishListItem:action.payload.length}
       
       case types.LIKE_WishList:
         return {...state,like:!state.like,loading:false,error:false}  

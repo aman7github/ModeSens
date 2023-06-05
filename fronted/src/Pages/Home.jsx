@@ -12,6 +12,7 @@ import { wSuccess,wError,wLoading } from '../redux/WishList/action'
 import {useDispatch, useSelector} from "react-redux"
 import Error from '../components/Error'
 
+
 const Home = () => {
 
 
@@ -79,16 +80,17 @@ const Home = () => {
  }
 
  React.useState(()=>{
-  if(token.length!=0){
+
   getCartData()
   getWishListData()
-  }
+ 
+  
 },[])
 
   return (
     <>
-    { c_error==true || w_error==true ? <Error /> :
-
+    {/* { c_error==true || w_error==true ? <Error /> : */}
+   {
     <Box>
     <Navbar />
   {/* <-------------------------first container------------------------------------> */}

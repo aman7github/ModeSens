@@ -25,13 +25,13 @@ switch(action.type){
         return {...state,loading:false,error:true}
      
       case types.GET_Cart_Success:
-        return {...state,loading:false,error:false,data:action.payload}  
+        return {...state,loading:false,error:false,data:action.payload,totalCartItem:action.payload.length}  
   
       case types.DELETE_Cart_Success:
         return {...state,loading:false,error:false,data:action.payload}
 
       case types.Post_Cart_Success:
-         return {...state,totalCartItem:state.data.length,loading:false,error:false} 
+         return {...state,data:action.payload,totalCartItem:action.payload.length,loading:false,error:false} 
 
       case types.GET_Pincode:
         return {...state,pincode:action.payload,loading:false,error:false}  

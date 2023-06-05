@@ -49,7 +49,7 @@ const Card = ({img,title ,des,price,originalprice,arr,handleclick}) => {
   return (
     <>
             
-               <Flex flexDirection={'column'} w="100%"  onClick={invoke} bg="rgb(248,247,246)"   >
+               <Flex flexDirection={'column'} w="100%"  onClick={invoke} h="100%"   >
                   <Image src={img} w={{base:"100%",sm:"80%",md:"90%",lg:"70%"}} m="auto" h="18rem" ref={ref} onMouseOver={()=>myfun(arr)} onMouseOut={()=>leave(img)}  />
                   <Center fontSize={{base:"0.7rem",sm:"1.1rem",md:"1.3rem"}} fontWeight="500"  >{title}</Center>
                   <Center color="gray" mt="0.5rem" paddingLeft={3} paddingRight={3} fontSize={{base:"0.7rem",sm:"1rem"}} >{des}</Center>

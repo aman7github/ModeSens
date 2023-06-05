@@ -87,7 +87,7 @@ const Women = () => {
 
   return (
   <>
-    {  wo_error==true? <Error /> :  wo_loading==true? <Loader /> :   
+    {   wo_loading==true? <Loader /> :   
       // <-----------------------------if loading false then this box will render------------------------------------------------------------>             
        <Box>  
          
@@ -223,7 +223,7 @@ const Women = () => {
                         <Grid w={{base:"50%",sm:"50%",md:"60%",lg:"72%"}}  templateColumns={{base:"repeat(1,1fr)",md:"repeat(2,1fr)",lg:"repeat(3,1fr)"}} gap="0.5rem" >
                              { data.length!=0 &&
                                data.map((el,i)=>{
-                                     return <GridItem key={el._id} border="1px"  borderColor="gray.200" >
+                                     return <GridItem key={el._id} border="1px"  borderColor="gray.200" pb="1rem"  bg="rgb(248,247,246)" >
 
                                               {/* <Center   pos="absolute" ml="-0.5rem" fontSize="2rem"  >
                                                   <AiOutlineHeart ref={ele=>{ref.current[i]=ele}}  onClick={()=>hanldeclick(i)}  />

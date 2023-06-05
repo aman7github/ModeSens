@@ -49,6 +49,7 @@ const Login = () => {
                
                  const toast = useToast()
                  const location = useLocation()
+                //  const url =location.state.url
               
                  const navigate=useNavigate()
 
@@ -63,7 +64,7 @@ const Login = () => {
                         .then((res)=>{
                             dispatch(Token(res.token))
                             dispatch(Name(res.name))
-                            navigate("/")
+                         
                           
                               
                             toast({
@@ -72,6 +73,8 @@ const Login = () => {
                               isClosable:true,
                               position:"top"
                             })
+
+                            navigate("/")
  
                         }
                         ).catch((err)=>{
@@ -187,12 +190,13 @@ const Login = () => {
 
                 
 
-                       <Input  w="55%" m="auto" mt="3rem" border="1px" borderRadius={'0'} placeholder=' Enter Your Email' h="3.3rem" focusBorderColor='black' name="email" value={email} onChange={handlechange} />
+                       <Input  w="55%" m="auto" mt="3rem" border="1px" borderRadius={'0'} placeholder=' Enter Your Email' h="3.3rem"
+                        focusBorderColor='black' name="email" value={email} onChange={handlechange} />
  
                        <InputGroup w="55%" m="auto" mt="1rem"    >
                             <Input
                                 pr='4.5rem'
-                                
+                            
                                 type={show ? 'text' : 'password'}
                                 placeholder=' Enter Your Password'
                                 border="1px" focusBorderColor='black'
@@ -206,7 +210,7 @@ const Login = () => {
                              </InputRightElement>
                        </InputGroup>
 
-                       {/* <RouterLink  to="/" > */}
+                       {/* <RouterLink  to={`${location.state.url}`} > */}
                        <Button    w="55%" m="auto" mt="2rem" bg="black" h="3.3rem" color="white" borderRadius={'0'} fontSize="1.1rem"_hover={{bg:"black",color:"white",border:"1px"}} onClick={login} >
                         
                           LOG IN

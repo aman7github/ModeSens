@@ -8,7 +8,7 @@ import {AiOutlineHeart} from "react-icons/ai"
 import S from '../components/S'
 import Route from "../components/Route"
 import Footer from '../components/Footer'
-import {cSuccess} from "../redux/Cart/action"
+import {PostCart, cSuccess} from "../redux/Cart/action"
 import { wSuccess } from '../redux/WishList/action'
 import {Link as RouterLink} from "react-router-dom"
 import Loader from '../components/Loader'
@@ -135,6 +135,7 @@ const SingleProductPage = () => {
        .then((res)=>res.json())
        .then((res)=>{
         dispatch(cSuccess(res.data))
+        dispatch(PostCart(res.data))
 
            console.log(res)
            toast({
@@ -231,7 +232,7 @@ console.log(gender[1],id)
 
   return (
     <>
-    { s_error? <Error /> : s_loading==true? <Loader /> :   
+    {  s_loading==true? <Loader /> :   
       // <-----------------------------if loading false then this box will render------------------------------------------------------------>             
 
       <Box>
@@ -243,33 +244,33 @@ console.log(gender[1],id)
        
             <Flex w="95%"  m="auto" mt="2rem"  justifyContent={'space-between'} flexDirection={{base:'column',lg:'row'}} >
                  
-                 <Flex  w={{base:"80%",md:"60%",lg:"30%"}} h="100%" m="auto"    >
+                 <Flex  w={{base:"80%",sm:"60%",md:"45%",lg:"30%"}} h="100%" m="auto" border="1px" mt="1.4rem"   >
                      <S  card={imgdata}  />
                      {/* <AiOutlineHeart cursor={'pointer'} fontSize="2.2rem" onClick={addToWishList}  /> */}
                  </Flex>
 
 
-                 <Box  w={{base:"100%",lg:"60%"}} h="100%"  >
+                 <Flex  w={{base:"100%",lg:"60%"}} h="100%"  justifyContent={{base:"center",lg:"start"}} flexDirection={'column'} >
 
-                         <Box  mt="1rem" textAlign={'start'}  fontSize="1.6rem" fontWeight="600" >
+                         <Box  mt="1rem" textAlign={{base:"center",lg:"start"}}  fontSize="1.6rem" fontWeight="600" >
                              {data.Title}
                          </Box>
 
-                         <Box  mt="1rem" color="gray" textAlign={'start'} >
+                         <Box  mt="1rem" color="gray" textAlign={{base:"center",lg:"start"}} >
                              {data.Name}
                          </Box>
 
-                         <Flex mt="0.7rem" textAlign={'start'} fontSize="1.3rem" fontWeight="600" >  
+                         <Flex mt="0.7rem" textAlign={{base:"center",lg:"start"}} fontSize="1.3rem" fontWeight="600" justifyContent={{base:"center",lg:"start"}}>  
                             <Center color="rgb(192,0,0)"  >${data.price} (30% OFF) </Center> 
                             <Center  > - ${data.Sprice} </Center>    
                          </Flex>
 
-                          <Box textAlign={'start'} mt="1rem" fontSize="1.2rem" fontWeight="500" >
+                          <Box textAlign={{base:"center",lg:"start"}} mt="1rem" fontSize="1.2rem" fontWeight="500" >
                              Select Your Size
                           </Box>
 
 
-                          <Flex justifyContent={'start'} mt="1rem" gap={"0.5rem"}    >
+                          <Flex justifyContent={{base:"center",lg:"start"}} mt="1rem" gap={"0.5rem"}    >
                             {  
                               
                                 arr.map((el,i)=>{
@@ -281,7 +282,7 @@ console.log(gender[1],id)
 
         {/* <-----------------------------------------quantity---------------------------------------------> */}
 
-                          <Flex  mt="3rem" justifyContent={'start'}    >
+                          <Flex  mt="3rem" justifyContent={{base:"center",lg:"start"}}    >
                                 <Center w="3rem" h="3rem" border="1px" onClick={DecQua} fontSize="1.8rem" bg="black" color="white"  fontWeight="bold" cursor={'pointer'}  > - </Center>
 
                                 <Center w="8rem" h="3rem" border="1px" fontSize="1.2rem" fontWeight="500"  >Quantity: {quantity}</Center >
@@ -290,12 +291,12 @@ console.log(gender[1],id)
                             </Flex>
          {/* <-----------------------------------------Buttons---------------------------------------------> */}   
 
-                          <Flex  flexDirection={{base:"column",lg:"row"}}   gap="1rem" mt="3rem" w={{base:"80%",md:"70%",lg:"100%"}} >
-                            <Center border="1px" w={{base:"100%",md:"60%",lg:"40%"}} h="3rem" bg="white" color="black" fontSize="1rem" fontWeight="bold" cursor="pointer" onClick={addToCart} >
+                          <Flex  flexDirection={{base:"column",lg:"row"}} justifyContent={{base:"center",lg:"space-between"}}  gap="1rem" mt="3rem" w={{lg:"80%"}}  >
+                            <Center border="1px" w={{base:"100%",sm:"70%",md:"60%",lg:"50%"}} h="3rem" bg="white" color="black" fontSize="1rem" fontWeight="bold" cursor="pointer" m={{base:"auto",lg:"0rem"}} onClick={addToCart} >
                                 ADD TO CART
                             </Center>
 
-                            <Box   w={{base:"100%",md:"60%",lg:"40%"}}  fontSize="1rem"     >
+                            <Box   w={{base:"100%",sm:"70%",md:"60%",lg:"50%"}}  fontSize="1rem"   textAlign={{base:"center",lg:"start"}}  m={{base:"auto",lg:"0rem"}} >
                              <RouterLink to={`/shipping/${id}`} state={{gender:gender[1]}} >
                               <Button w="100%"  bg="black" color="white" _hover={{bg:"black",color:"white"}} h="3rem"   cursor="pointer" fontWeight="bold" isDisabled={selectbtn==""?true:false} borderRadius={0}>
                                 BUY NOW
@@ -304,7 +305,7 @@ console.log(gender[1],id)
                             </Box>
                           </Flex>
 
-                 </Box>
+                 </Flex>
 
              </Flex>
 

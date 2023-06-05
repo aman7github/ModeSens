@@ -191,7 +191,7 @@ const Shiping = () => {
    
 
   return (
-       <>  { ad_error? <Error /> : ad_loading ? <Loader />:
+       <>  { ad_loading ? <Loader />:
 
             <Box>
             <Navbar />
@@ -365,9 +365,10 @@ const Shiping = () => {
                                  ₹{ directBuyData.length!=0?  singleShippingPrice :  payableAmount}
                                </Box>
                              </Flex>
-                
+                          
                              <RouterLink to="/payment"   state={{num:selectbtn}} >
-                                <Button mt="3rem"  w="100%" bg="black" h="3rem" color="white" fontSize="1.1rem"_hover={{bg:"black",color:"white",border:"1px"}} >
+                                <Button mt="3rem"  w="100%" bg="black" h="3rem" color="white" fontSize="1.1rem"
+                                 _hover={{bg:"black",color:"white",border:"1px"}} isDisabled={selectbtn==""?true:false} >
                                   Proceed To Pay
                                 </Button>
                              </RouterLink>

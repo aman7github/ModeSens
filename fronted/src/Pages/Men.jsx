@@ -73,7 +73,7 @@ import Error from '../components/Error'
 
   return ( 
    <>
-   {  m_error==true? <Error /> : m_loading==true? <Loader /> :   
+   {  m_loading==true? <Loader /> :   
       // <-----------------------------if loading false then this box will render------------------------------------------------------------>             
       <Box>  
 
@@ -209,7 +209,7 @@ import Error from '../components/Error'
                         <Grid w={{base:"50%",sm:"50%",md:"60%",lg:"72%"}} templateColumns={{base:"repeat(1,1fr)",md:"repeat(2,1fr)",lg:"repeat(3,1fr)"}} gap="0.5rem" >
                              { data &&
                                data.map((el,i)=>{
-                                     return <GridItem key={el._id} border="1px"   borderColor="gray.200" >
+                                     return <GridItem key={el._id} border="1px"  bg="rgb(248,247,246)"  borderColor="gray.200" pb="1rem" >
 
                                               {/* <Center   pos="absolute" ml="-0.5rem" fontSize="2rem"  >
                                                   <AiOutlineHeart   />

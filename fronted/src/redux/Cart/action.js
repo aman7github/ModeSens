@@ -63,8 +63,9 @@ export const PayableAmount=()=>{
   }
 }
 
-export const PostCart=()=>{
+export const PostCart=(payload)=>{
   return{
-    type:types.Post_Cart_Success
+    type:types.Post_Cart_Success,
+    payload
   }
 }

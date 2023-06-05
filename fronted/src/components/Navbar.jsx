@@ -15,18 +15,20 @@ import Logout2 from './Logout2'
 
 const Navbar = () => {
 
-  const {token,data,wdata,totalCartItem,WishListData,name} = useSelector(store=>{
+  const {token,data,wdata,totalCartItem,WishListData,name,totalWishListItem} = useSelector(store=>{
     return{
         token:store.userReducer.token,
         data:store.cartReducer.data,
         WishListData:store.wishListReducer.WishListData,
         totalCartItem:store.cartReducer.totalCartItem,
         name:store.userReducer.name,
+        totalCartItem:store.cartReducer.totalCartItem,
+        totalWishListItem:store.wishListReducer.totalWishListItem
       
     }
 })
 
- console.log(WishListData.length,data.length)
+ 
   
  
 
@@ -39,7 +41,7 @@ const Navbar = () => {
       <Flex w={{base:"100%",lg:"65%"}} h="100%"  justifyContent={{sm:"start",lg:"space-between"}}   >
            
          <Center display={{base:"block",lg:"none"}} mt={3} >
-           <Menu  >
+           <Menu   >
             <MenuButton as={Button} >
               <GiHamburgerMenu />
             </MenuButton>
@@ -52,7 +54,7 @@ const Navbar = () => {
               <RouteLink to="/cart">
                <Flex  fontSize="1.2rem" justifyContent="center" alignItems="center" >
                 Cart <AiOutlineShoppingCart fontSize="1.4rem"   />
-                <Center border="1px" borderRadius="50%" pos="absolute" fontSize="0.8rem" bg="rgb(192,0,0)" color="white" w="1.2rem" ml="4.2rem" mb="0.8rem" >  {token.length!=0? data.length :0}</Center>
+                <Center border="1px" borderRadius="50%" pos="absolute" fontSize="0.8rem" bg="rgb(192,0,0)" color="white" w="1.2rem" ml="4.2rem" mb="0.8rem" >  {token!="" ? totalCartItem :0}</Center>
                </Flex>
               </RouteLink>
             </MenuItem>
@@ -61,7 +63,7 @@ const Navbar = () => {
              <RouteLink to="/wishlist" >
                <Flex  fontSize="1.1rem" justifyContent="center" alignItems="center" >
                 WISHLIST <AiOutlineHeart ml="0.5rem" fontSize="1.4rem"   />
-                <Center border="1px" ml="6.7rem" borderRadius="50%" pos="absolute" fontSize="0.8rem" bg="rgb(192,0,0)" color="white" w="1.2rem" mb="0.8rem" > {token.length!=0 ? WishListData.length : 0}</Center>
+                <Center border="1px" ml="6.7rem" borderRadius="50%" pos="absolute" fontSize="0.8rem" bg="rgb(192,0,0)" color="white" w="1.2rem" mb="0.8rem" > {token!="" ? totalWishListItem : 0}</Center>
                </Flex>
              </RouteLink>
             </MenuItem>
@@ -69,7 +71,7 @@ const Navbar = () => {
            
               <MenuItem>
                 {/* <RouteLink to="/signup" >  */}
-                    { token.length==0?  <ButtonSignup />: <Logout2 />     }
+                    { token==false?  <ButtonSignup />: <Logout2 />     }
                 {/* </RouteLink> */}
                </MenuItem>
             
@@ -120,10 +122,10 @@ const Navbar = () => {
         <Center gap={4} fontSize="1.7rem" > 
 
            <Center>
-           <RouteLink to="/wishlist" >  
+           <RouteLink to="/wishlist" state={{url:"/wishlist"}}  >  
              <Flex>
                 <AiOutlineHeart  />
-                <Center border="1px" borderRadius="50%" pos="absolute" fontSize="0.8rem" bg="rgb(192,0,0)" color="white" w="1.2rem" ml="1.2rem"  > {token.length!=0 ? WishListData.length : 0}</Center>
+                <Center border="1px" borderRadius="50%" pos="absolute" fontSize="0.8rem" bg="rgb(192,0,0)" color="white" w="1.2rem" ml="1.2rem"  > {token!="" ? totalWishListItem : 0}</Center>
              </Flex>
            </RouteLink>  
           </Center>
@@ -132,7 +134,7 @@ const Navbar = () => {
           <RouteLink to="/cart" state={{url:"/cart"}} >
             <Flex>
                 <AiOutlineShoppingCart   />
-                <Center border="1px" borderRadius="50%" pos="absolute" fontSize="0.8rem" bg="rgb(192,0,0)" color="white" w="1.2rem" ml="1.2rem" > {token.length!=0 ? data.length :0} </Center>
+                <Center border="1px" borderRadius="50%" pos="absolute" fontSize="0.8rem" bg="rgb(192,0,0)" color="white" w="1.2rem" ml="1.2rem" > {token!="" ? totalCartItem :0} </Center>
              </Flex>
           </RouteLink>
           </Center>
@@ -144,7 +146,7 @@ const Navbar = () => {
        
          <Center  fontWeight="600" h="85%" ml="0.5rem"  mt="0.1rem" >
            {/* <RouteLink to="/signup" > */}
-                 { token==""?  <ButtonSignup />: <Logout   />     }
+                 { token==false?  <ButtonSignup />: <Logout   />     }
             {/* </RouteLink> */}
          </Center>
         
