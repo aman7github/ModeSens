@@ -51,7 +51,7 @@ const SingleProductPage = () => {
     const getWomenData=()=>{
          dispatch(sLoading())
 
-        fetch(`https://long-lime-crab-garb.cyclic.app/${a[1]}/get/${id}`)
+        fetch(`https://modesens1.onrender.com/${a[1]}/get/${id}`)
         .then((res)=>res.json())
         .then((res)=>{
              dispatch(sSuccess(res.msg))
@@ -124,7 +124,7 @@ const SingleProductPage = () => {
           if(token.length!=0){
          data.Size = selectbtn
          data.Quantity = quantity
-       fetch(`https://long-lime-crab-garb.cyclic.app/cart/add`,{
+       fetch(`https://modesens1.onrender.com/cart/add`,{
            method:"POST",
            body:JSON.stringify(addData),
            headers:{
@@ -148,6 +148,12 @@ const SingleProductPage = () => {
        })
        .catch((err)=>{
            console.log(err)
+           toast({
+            title:res.msg,
+            duration:5000,
+            isClosable:true,
+            position:"top"
+          })
  
        })
       }else{
@@ -185,7 +191,7 @@ const addToWishList=()=>{
     if(selectedItem!=""){
     addwishlistData.Size = selectedItem
     addwishlistData.Quantity = quantity
-   fetch(`https://long-lime-crab-garb.cyclic.app/wishlist/add`,{
+   fetch(`https://modesens1.onrender.com/wishlist/add`,{
        method:"POST",
        body:JSON.stringify(addwishlistData),
        headers:{

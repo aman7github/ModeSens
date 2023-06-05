@@ -41,7 +41,7 @@ const Home = () => {
     // <--------------------------------get cart data to update in navbar ---------------------------------->
     const getCartData=()=>{
          dispatch(cLoading())
-      fetch(`https://long-lime-crab-garb.cyclic.app/cart/get`,{
+      fetch(`https://modesens1.onrender.com/cart/get`,{
         headers:{
           "Content-Type":"application/json",
           "authorization":`${token}`
@@ -63,7 +63,7 @@ const Home = () => {
  
  const getWishListData=()=>{
      dispatch(wLoading())
-   fetch(`https://long-lime-crab-garb.cyclic.app/wishlist/get`,{
+   fetch(`https://modesens1.onrender.com/wishlist/get`,{
      headers:{
        "Content-Type":"application/json",
        "authorization":`${token}`
@@ -80,10 +80,10 @@ const Home = () => {
  }
 
  React.useState(()=>{
-
+ if(token){
   getCartData()
   getWishListData()
- 
+ }
   
 },[])
 

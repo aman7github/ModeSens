@@ -34,7 +34,7 @@ const WishList = () => {
 
   const getWishListData=()=>{
    wLoading()
-    fetch(`https://long-lime-crab-garb.cyclic.app/wishlist/get`,{
+    fetch(`https://modesens1.onrender.com/wishlist/get`,{
       headers:{
         "Content-Type":"application/json",
         "authorization":`${token}`
@@ -54,7 +54,7 @@ const WishList = () => {
 
 
   const remove=(id)=>{   
-    fetch(`https://long-lime-crab-garb.cyclic.app/wishlist/delete/${id}`,{
+    fetch(`https://modesens1.onrender.com/wishlist/delete/${id}`,{
         method:"DELETE",
         headers:{
             "Content-Type":"application/json",
@@ -75,7 +75,7 @@ const WishList = () => {
   const toast = useToast()
   const addToCart=(el)=>{
   
-   fetch(`https://long-lime-crab-garb.cyclic.app/cart/add`,{
+   fetch(`https://modesens1.onrender.com/cart/add`,{
        method:"POST",
        body:JSON.stringify(el),
        headers:{

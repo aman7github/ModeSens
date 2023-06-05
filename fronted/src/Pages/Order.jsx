@@ -37,7 +37,7 @@ const Order = () => {
 
   const getOrderData=()=>{
    
-    fetch(`https://long-lime-crab-garb.cyclic.app/order/get`,{
+    fetch(`https://modesens1.onrender.com/order/get`,{
       headers:{
         "Content-Type":"application/json",
         "authorization":`${token}`

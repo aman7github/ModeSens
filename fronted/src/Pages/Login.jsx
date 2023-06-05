@@ -54,7 +54,7 @@ const Login = () => {
                  const navigate=useNavigate()
 
                  const login=()=>{
-                      fetch(`https://long-lime-crab-garb.cyclic.app/user/login`,{
+                      fetch(`https://modesens1.onrender.com/user/login`,{
                          method:"POST",
                          body:JSON.stringify(val),
                          headers:{

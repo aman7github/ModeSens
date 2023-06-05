@@ -79,7 +79,7 @@ const Shiping = () => {
   //  <--------------------------------post address----------------------------------------->
    const handleclick=()=>{
       
-      fetch(`https://long-lime-crab-garb.cyclic.app/address/add`,{
+      fetch(`https://modesens1.onrender.com/address/add`,{
         method:"POST",
         body:JSON.stringify(val),
         headers:{
@@ -111,7 +111,7 @@ const Shiping = () => {
 
                     const getBuyData=(gender,id)=>{
                      
-                     fetch(`https://long-lime-crab-garb.cyclic.app/${gender}/get/${id}`)
+                     fetch(`https://modesens1.onrender.com/${gender}/get/${id}`)
                      .then((res)=>res.json())
                      .then((res)=>{
                           dispatch(DirectBuy(res.msg))
@@ -136,7 +136,7 @@ const Shiping = () => {
 
      const getAddress=()=>{
        dispatch(adLoading())
-      fetch(`https://long-lime-crab-garb.cyclic.app/address/get`,{
+      fetch(`https://modesens1.onrender.com/address/get`,{
         headers:{
           "Content-Type":"application/json",
           "authorization":`${token}`

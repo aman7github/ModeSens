@@ -168,7 +168,7 @@ console.log(detail)
     // <-----------------------------------data deleted from cart if you order from cart--------------------------------------------------->
     const removeFromCartAfterBuy=()=>{
         
-      fetch(`https://long-lime-crab-garb.cyclic.app/cart/delete`,{
+      fetch(`https://modesens1.onrender.com/cart/delete`,{
           method:"DELETE",
           headers:{
               "Content-Type":"application/json",

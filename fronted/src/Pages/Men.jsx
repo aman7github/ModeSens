@@ -42,7 +42,7 @@ import Error from '../components/Error'
 
    const getWomenData=(currentPage,sort,category)=>{
         dispatch(mLoading())
-        fetch(`https://long-lime-crab-garb.cyclic.app/men/get?sort=price&order=${sort}&page=${currentPage}&category=${category}&brand=${brand}`)
+        fetch(`https://modesens1.onrender.com/men/get?sort=price&order=${sort}&page=${currentPage}&category=${category}&brand=${brand}`)
         .then((res)=>res.json())
         .then((res)=>{
           //  console.log(res)

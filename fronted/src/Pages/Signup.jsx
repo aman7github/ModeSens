@@ -34,7 +34,7 @@ const Signup = () => {
                 const toast = useToast()
 
                 const addUser=()=>{
-                     fetch(`https://long-lime-crab-garb.cyclic.app/user/register`,{
+                     fetch(`https://modesens1.onrender.com/user/register`,{
                         method:"POST",
                         body:JSON.stringify(val),
                         headers:{

@@ -45,8 +45,8 @@ const Women = () => {
 
    const getWomenData=(currentPage,sort,category)=>{
         dispatch(woLoading())
-        
-        fetch(`https://long-lime-crab-garb.cyclic.app/women/get?sort=price&order=${sort}&page=${currentPage}&category=${category}&brand=${brand}`)
+        //https://modesens1.onrender.com/women/get
+        fetch(`https://modesens1.onrender.com/women/get?sort=price&order=${sort}&page=${currentPage}&category=${category}&brand=${brand}`)
         .then((res)=>res.json())
         .then((res)=>{
             dispatch(GetSuccess(res.msg))
@@ -83,7 +83,7 @@ const Women = () => {
        }
      
    
-    console.log(like)
+    console.log(data)
 
   return (
   <>
@@ -221,9 +221,9 @@ const Women = () => {
 {/* <----------------------------------Right side -----------------------------------------> */}
 
                         <Grid w={{base:"50%",sm:"50%",md:"60%",lg:"72%"}}  templateColumns={{base:"repeat(1,1fr)",md:"repeat(2,1fr)",lg:"repeat(3,1fr)"}} gap="0.5rem" >
-                             { data.length!=0 &&
-                               data.map((el,i)=>{
-                                     return <GridItem key={el._id} border="1px"  borderColor="gray.200" pb="1rem"  bg="rgb(248,247,246)" >
+                             {
+                                data.length!=0 && data.map((el,i)=>{
+                                     return <GridItem key={i}  border="1px"  borderColor="gray.200" pb="1rem"  bg="rgb(248,247,246)" >
 
                                               {/* <Center   pos="absolute" ml="-0.5rem" fontSize="2rem"  >
                                                   <AiOutlineHeart ref={ele=>{ref.current[i]=ele}}  onClick={()=>hanldeclick(i)}  />
