@@ -1,7 +1,7 @@
 import { Button,Center,Flex,PseudoBox } from '@chakra-ui/react'
 import React from 'react'
 import {useDispatch,useSelector} from "react-redux"
-import { CurrentPage, PageQuery } from '../redux/women/action'
+import { PageQuery, woCurrentPage } from '../redux/women/action'
 import { useSearchParams } from 'react-router-dom'
 
 
@@ -11,6 +11,7 @@ const Pagination = () => {
         return{
             totalItem:store.womenReducer.totalItem,
             currentPage:store.womenReducer.currentPage,
+            
             // pageQuery:store.womenReducer.pageQuery
         }
       })
@@ -36,7 +37,7 @@ const Pagination = () => {
 
       const getpage=(i)=>{
         
-         dispatch(CurrentPage(i+1)) 
+        dispatch(woCurrentPage(i+1)) 
       }
        
       

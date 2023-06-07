@@ -120,7 +120,7 @@ const SingleProductPage = () => {
     
     const addToCart=()=>{
  
-        if(selectbtn!=""){
+        if(selectbtn!==""){
           if(token.length!=0){
          data.Size = selectbtn
          data.Quantity = quantity
@@ -298,7 +298,7 @@ console.log(gender[1],id)
 
                             <Box   w={{base:"100%",sm:"70%",md:"60%",lg:"50%"}}  fontSize="1rem"   textAlign={{base:"center",lg:"start"}}  m={{base:"auto",lg:"0rem"}} >
                              <RouterLink to={`/shipping/${id}`} state={{gender:gender[1]}} >
-                              <Button w="100%"  bg="black" color="white" _hover={{bg:"black",color:"white"}} h="3rem"   cursor="pointer" fontWeight="bold" isDisabled={selectbtn==""?true:false} borderRadius={0}>
+                              <Button w="100%"  bg="black" color="white" _hover={{bg:"black",color:"white"}} h="3rem"   cursor="pointer" fontWeight="bold" isDisabled={selectbtn===""?true:false} borderRadius={0}>
                                 BUY NOW
                               </Button>
                              </RouterLink>

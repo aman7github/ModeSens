@@ -14,6 +14,7 @@ import PrivateRoute from '../components/PrivateRoute'
 import Order from '../Pages/Order'
 import Payment from '../Pages/Payment'
 import InvalidRoute from '../components/InvalidRoute'
+import Try from "../Pages/Try"
 
 
 
@@ -35,6 +36,7 @@ const AllRoutes = () => {
        <Route path="/order" element={<PrivateRoute> <Order />  </PrivateRoute> } />
        <Route path="/payment" element={<PrivateRoute><Payment /> </PrivateRoute> } />
        <Route path="*" element={<Home />} />
+       <Route path="/try" element={<Try />} />
       
        
        

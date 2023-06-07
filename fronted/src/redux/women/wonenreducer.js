@@ -30,16 +30,18 @@ switch(action.type){
   case types.GET_TotalItem:return{
     ...state, totalItem:action.payload,loading:false, error:false
   }
+  
   case types.GET_Page:
     return{...state, currentPage:action.payload,loading:false, error:false  }
 
-  case types.GET_Sort:
+
+  case types.GET_Women_Sort:
     return {...state, sort:action.payload ,loading:false, error:false}
 
-   case types.GET_Category:
-     return {...state,category:action.payload,loading:false, error:false} 
+   case types.GET_Women_Category:
+     return {...state,category:action.payload, currentPage:1,loading:false, error:false} 
     
-   case types.GET_Brand:
+   case types.GET_Women_Brand:
     return {...state,brand:action.payload,loading:false, error:false}
 
 

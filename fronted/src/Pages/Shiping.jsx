@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from "../components/Navbar"
-import { Box, Flex,Text, Input,Button,RadioGroup,Stack,Divider,Radio,FormControl,Switch,VStack, Center } from '@chakra-ui/react'
+import { Box, Flex,Text, Input,Button,RadioGroup,Stack,Divider,Radio,FormControl,Switch,VStack, Center, useToast } from '@chakra-ui/react'
 import {useDispatch, useSelector} from "react-redux"
 import { Address, adError, adLoading, chooseAddress } from '../redux/Address/action'
 import AddressBlock from '../components/AddressBlock'
@@ -40,16 +40,33 @@ const Shiping = () => {
      // getAddress()
     },[])
 
+    const toast = useToast()
+
     // <-----------------------------set coupon--------------------------------------->
     const [coupon,setCoupon] = React.useState("")
     const getCoupon=()=>{
       if(directBuyData.length!=0){
         if(coupon=="Modesens20"){
           dispatch(SingleDiscount())
+        }else{
+           toast({
+            title:"coupon code is not correct",
+            duration:3000,
+            isClosable:true,
+            position:"top"
+          })
         }
       }else{
       if(coupon=="Modesens20"){
        dispatch(ApplyCoupon())
+      }else{
+        toast({
+          title:"coupon code is not correct",
+          duration:3000,
+          isClosable:true,
+          position:"top"
+        })
+        
       }
     }
       setCoupon("")
@@ -177,14 +194,11 @@ const Shiping = () => {
                        ref.current[i].style.color = 'white'
                        ref.current[i].style.backgroundColor = 'black'
                        ref.current[i].style.border = '1px solid black'
-             
-                       
-                    
-                   
+      
                       
                     }
 
-                    console.log("v", address[selectbtn])
+                    console.log("v", selectbtn)
      
  
 
@@ -368,7 +382,7 @@ const Shiping = () => {
                           
                              <RouterLink to="/payment"   state={{num:selectbtn}} >
                                 <Button mt="3rem"  w="100%" bg="black" h="3rem" color="white" fontSize="1.1rem"
-                                 _hover={{bg:"black",color:"white",border:"1px"}} isDisabled={selectbtn==""?true:false} >
+                                 _hover={{bg:"black",color:"white",border:"1px"}} isDisabled={selectbtn===""?true:false} >
                                   Proceed To Pay
                                 </Button>
                              </RouterLink>

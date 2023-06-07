@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {useDispatch,useSelector} from "react-redux"
 import { mError, GetSuccess, mLoading, Sort, TotalItem,ByCategory, ByBrand } from '../redux/men/action'
 import {Box, Center,Grid,GridItem, Flex, Text,Image} from "@chakra-ui/react"
@@ -7,10 +7,12 @@ import Pagination from '../components/Pagination'
 import Navbar from "../components/Navbar"
 import Route from '../components/Route'
 import Footer from "../components/Footer"
-import {Link as RouteLink} from "react-router-dom"
+import {Link as RouteLink, useSearchParams} from "react-router-dom"
 import {AiOutlineHeart} from "react-icons/ai"
 import Loader from '../components/Loader'
 import Error from '../components/Error'
+import NoProduct from '../components/NoProduct'
+import { CurrentPage, woByBrand, woByCategory, woCurrentPage, woSort } from '../redux/women/action'
 
 
 
@@ -35,12 +37,21 @@ import Error from '../components/Error'
 
 
    React.useEffect(()=>{
-       getWomenData(currentPage,sort,category,brand)
+  
+       getMenData(currentPage,sort,category,brand)
    },[currentPage,sort,category,brand])
+
+   
+   // useEffect(()=>{
+   //    setsearchParmas({page:currentPage,category:category,brand:brand,sort:sort})
+   // },[currentPage,sort,category,brand])
+
+  
+   // const [searchParams,setsearchParmas] = useSearchParams()
   
  
 
-   const getWomenData=(currentPage,sort,category)=>{
+   const getMenData=(currentPage,sort,category)=>{
         dispatch(mLoading())
         fetch(`https://modesens1.onrender.com/men/get?sort=price&order=${sort}&page=${currentPage}&category=${category}&brand=${brand}`)
         .then((res)=>res.json())
@@ -205,7 +216,7 @@ import Error from '../components/Error'
                         </Box> 
                         
 {/* <----------------------------------Right side -----------------------------------------> */}
-
+                    {  data.length===0 ? <NoProduct brand={brand} category={category} /> :
                         <Grid w={{base:"50%",sm:"50%",md:"60%",lg:"72%"}} templateColumns={{base:"repeat(1,1fr)",md:"repeat(2,1fr)",lg:"repeat(3,1fr)"}} gap="0.5rem" >
                              { data &&
                                data.map((el,i)=>{
@@ -225,6 +236,7 @@ import Error from '../components/Error'
                                 })
                              }	
                         </Grid>
+                     }
 
                    </Flex>
 

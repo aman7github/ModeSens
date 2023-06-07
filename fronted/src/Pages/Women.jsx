@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {useDispatch,useSelector} from "react-redux"
-import { woError, GetSuccess, woLoading, Sort, TotalItem,ByCategory, ByBrand, CurrentPage, PageQuery} from '../redux/women/action'
-import {Box, Center,Grid,GridItem, Flex, Text,Image} from "@chakra-ui/react"
+import { woError, GetSuccess, woLoading, woSort, woTotalItem,woByCategory, woByBrand, woCurrentPage, PageQuery} from '../redux/women/action'
+import {Box, Center,Grid,GridItem, Flex, Text,Image, useToast} from "@chakra-ui/react"
 import Card from '../components/Card'
 import Pagination from '../components/Pagination'
 import Navbar from "../components/Navbar"
@@ -9,10 +9,14 @@ import Route from '../components/Route'
 import Footer from "../components/Footer"
 import { useSearchParams } from 'react-router-dom'
 import {Link as RouteLink} from "react-router-dom"
-import {Like} from "../redux/WishList/action"
-import {AiOutlineHeart} from "react-icons/ai"
+import {Like, wSuccess} from "../redux/WishList/action"
+import {AiOutlineHeart,AiFillHeart} from "react-icons/ai"
 import Loader from '../components/Loader'
 import Error from '../components/Error'
+import NoProduct from '../components/NoProduct'
+import { ByBrand, ByCategory, CurrentPage, Sort } from '../redux/men/action'
+import {BsHeart} from "react-icons/bs"
+import { PayableAmount, TotalDiscount, TotalPrice } from '../redux/Cart/action'
 
 
 
@@ -37,9 +41,23 @@ const Women = () => {
 
 
    React.useEffect(()=>{
+
        getWomenData(currentPage,sort,category,brand)
-  
    },[currentPage,sort,category,brand])
+
+
+   // useEffect(()=>{
+   //    setsearchParmas({page:currentPage,category:category,brand:brand,sort:sort})
+   // },[currentPage,sort,category,brand])
+
+  
+   // const [searchParams,setsearchParmas] = useSearchParams()
+
+   // const [pPage,setpPage] = useState(Number(searchParams.get("page")))
+
+
+
+  
   
  
 
@@ -50,7 +68,7 @@ const Women = () => {
         .then((res)=>res.json())
         .then((res)=>{
             dispatch(GetSuccess(res.msg))
-            dispatch(TotalItem(res.totalItems)) 
+            dispatch(woTotalItem(res.totalItems)) 
         })
         .catch((err)=>{
             console.log(err)
@@ -59,15 +77,15 @@ const Women = () => {
    }
 
     const Sortbyprice=(val)=>{
-       dispatch(Sort(val))
+       dispatch(woSort(val))
     }
 
     const Category=(val)=>{
-         dispatch(ByCategory(val))
+         dispatch(woByCategory(val))
     }
 
     const Brand=(val)=>{
-       dispatch(ByBrand(val))
+       dispatch(woByBrand(val))
     }
 
   
@@ -76,18 +94,64 @@ const Women = () => {
 
 
   // <------------------------------------------wishlis heart sym-------------------------------->
-        const ref= React.useRef([])
+       
+       const ref2 = useRef([])
+      //   const [p,setp] = useState(false)
+       
+      //   const hanldeclick=(i)=>{
+      //    setp(prev=>!p)
+      //    ref2.current[i].style.color=p?"black":"red"
+      //    console.log( ref2.current[i])
+       
+        
+      //  }
 
-       const hanldeclick=(i)=>{
-         console.log(ref.current[i])
-       }
+   // <------------------------------------add to wishlist----------------------------------------->
+
+      //  const toastWishlist = useToast()
+
+      // const handleclick=(el)=>{
+      //    fetch(`https://modesens1.onrender.com/wishlist/add`,{
+      //       method:"POST",
+      //       body:JSON.stringify(el),
+      //       headers:{
+      //         "Content-Type":"application/json",
+      //         "authorization":`${token}`
+      //       }
+      //   })
+      //   .then((res)=>res.json())
+      //   .then((res)=>{
+      //     dispatch(TotalPrice())
+      //     dispatch(TotalDiscount())
+      //     dispatch(PayableAmount())
+      //     dispatch(wSuccess(res.data))
+        
+      //       toastWishlist({
+      //         title:res.msg,
+      //         duration:3000,
+      //         isClosable:true,
+      //         position:"top"
+      //       })
+            
+      //   })
+      //   .catch((err)=>{
+      //       console.log(err)
+     
+      //   })
+
+
+
+
+
+
+      // }
      
    
-    console.log(data)
+  
 
   return (
   <>
-    {   wo_loading==true? <Loader /> :   
+    {   wo_loading==true? <Loader /> : wo_error==true? <Error />: 
       // <-----------------------------if loading false then this box will render------------------------------------------------------------>             
        <Box>  
          
@@ -141,7 +205,7 @@ const Women = () => {
                                   <Grid mt="0.7rem"  templateColumns={{base:"repeat(1,1fr)", lg:"repeat(2,1fr)" }} gap="1rem"  >
                                      <Center border="1px" pt="0.4rem" pb="0.4rem"   fontWeight={'bold'} fontSize="1rem" bg="black" color="white" borderRadius="0.5rem" 
                                        cursor={'pointer'} _hover={{bg:"white", color:"black"}} onClick={()=>Category("bag")} >
-                                         Bags
+                                         Bag
                                      </Center>
                                      <Center border="1px"   pt="0.4rem" pb="0.4rem" fontSize="1rem" fontWeight={'bold'} bg="black" color="white" borderRadius="0.5rem" 
                                        cursor={'pointer'} _hover={{bg:"white", color:"black"}} onClick={()=>Category("dress")} >
@@ -149,19 +213,19 @@ const Women = () => {
                                      </Center>
                                      <Center border="1px"   pt="0.4rem" pb="0.4rem" fontSize="1rem" fontWeight={'bold'} bg="black" color="white" borderRadius="0.5rem" 
                                        cursor={'pointer'} _hover={{bg:"white", color:"black"}} onClick={()=>Category("hats")} >
-                                         Hats
+                                         Hat
                                      </Center>
                                      <Center border="1px"   pt="0.4rem" pb="0.4rem" fontSize="1rem" fontWeight={'bold'} bg="black" color="white" borderRadius="0.5rem" 
                                        cursor={'pointer'} _hover={{bg:"white", color:"black"}} onClick={()=>Category("short")} >
-                                         Shorts
+                                         Short
                                      </Center>
                                      <Center border="1px"   pt="0.4rem" pb="0.4rem" fontSize="1rem" fontWeight={'bold'} bg="black" color="white" borderRadius="0.5rem" 
                                        cursor={'pointer'} _hover={{bg:"white", color:"black"}} onClick={()=>Category("pant")} >
-                                         Pants
+                                         Pant
                                      </Center>
                                      <Center border="1px"   pt="0.4rem" pb="0.4rem" fontSize="1rem" fontWeight={'bold'} bg="black" color="white" borderRadius="0.5rem" 
                                        cursor={'pointer'} _hover={{bg:"white", color:"black"}} onClick={()=>Category("boot")} >
-                                         Shoes
+                                         Shoe
                                      </Center>
                                   </Grid>
                              </Box>
@@ -219,18 +283,18 @@ const Women = () => {
                         </Box> 
                         
 {/* <----------------------------------Right side -----------------------------------------> */}
-
+                     {  data.length===0 ? <NoProduct brand={brand} category={category} /> :
                         <Grid w={{base:"50%",sm:"50%",md:"60%",lg:"72%"}}  templateColumns={{base:"repeat(1,1fr)",md:"repeat(2,1fr)",lg:"repeat(3,1fr)"}} gap="0.5rem" >
                              {
-                                data.length!=0 && data.map((el,i)=>{
+                                data.map((el,i)=>{
                                      return <GridItem key={i}  border="1px"  borderColor="gray.200" pb="1rem"  bg="rgb(248,247,246)" >
 
-                                              {/* <Center   pos="absolute" ml="-0.5rem" fontSize="2rem"  >
-                                                  <AiOutlineHeart ref={ele=>{ref.current[i]=ele}}  onClick={()=>hanldeclick(i)}  />
+                                              {/* <Center   pos="absolute" ml="-0.3rem" fontSize="1.8rem" color={'red'} ref={ele=>{ref2.current[i]=ele}} onClick={()=>handleclick(el)}  >
+                                                 <BsHeart  cursor={'pointer'}      />
                                                </Center> */}
 
                                                <RouteLink to={`/women/${el._id}`} >
-                                                      <Card img={el.Image} title={el.Title} des={el.Name} price={el.price} originalprice={el.Sprice} 
+                                                      <Card   img={el.Image} title={el.Title} des={el.Name} price={el.price} originalprice={el.Sprice} 
                                                         arr={el.arr}   />
                                                 </RouteLink>  
 
@@ -239,6 +303,7 @@ const Women = () => {
                                 })
                              }	
                         </Grid>
+                     }
 
                    </Flex>
 

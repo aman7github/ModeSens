@@ -87,8 +87,6 @@ const Cart = () => {
       dispatch(PayableAmount())
       dispatch(wSuccess(res.data))
     
-      
-        console.log("a",res)
         toastWishlist({
           title:res.msg,
           duration:3000,

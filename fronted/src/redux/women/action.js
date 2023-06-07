@@ -20,35 +20,36 @@ export const GetSuccess=(payload)=>{
     }
 }
 
-export const TotalItem=(payload)=>{
+export const woTotalItem=(payload)=>{
     return{
         type:types.GET_TotalItem,
         payload
     }
 }
 
-export const CurrentPage=(payload)=>{
+
+export const woCurrentPage=(payload)=>{
     return{
         type:types.GET_Page,
         payload
     }
 }
 
-export const Sort=(payload)=>{
+export const woSort=(payload)=>{
     return{
-        type:types.GET_Sort,
+        type:types.GET_Women_Sort,
         payload
     }
 }
-export const ByCategory=(payload)=>{
+export const woByCategory=(payload)=>{
     return{
-        type:types.GET_Category,
+        type:types.GET_Women_Category,
         payload
     }
 }
-export const ByBrand=(payload)=>{
+export const woByBrand=(payload)=>{
     return{
-        type:types.GET_Brand,
+        type:types.GET_Women_Brand,
         payload
     }
 }

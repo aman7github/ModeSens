@@ -162,7 +162,7 @@ const Signup = () => {
                                 pr='4.5rem'
                                 
                                 type={show ? 'text' : 'password'}
-                                placeholder=' Enter Your Password'
+                                placeholder=' Create Your Password'
                                 border="1px" focusBorderColor='black'
                                 h="3.3rem" borderRadius={'0'} 
                                 bg={'white'}

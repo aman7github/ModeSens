@@ -40,8 +40,9 @@ switch(action.type){
         return {...state,singleShippingPrice:p,loading:false,error:false}
 
       case types.Final_Order1:
- 
-        return {...state,finalorder:[...state.finalorder,action.payload],loading:false,error:false}  
+              let arr=[action.payload]
+            
+        return {...state,finalorder:arr,loading:false,error:false}  
 
       case types.Final_Order2:
         return {...state,finalorder:action.payload,loading:false,error:false}  

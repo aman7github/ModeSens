@@ -12,7 +12,7 @@ import {
   } from '@chakra-ui/react'
   import {useDispatch, useSelector} from "react-redux"
 import { FinalOrder1 ,FinalOrder2, RemoveFinalOrder} from '../redux/SingleProduct/action'
-import {Link as RouterLink,useLocation} from "react-router-dom"
+import {Link as RouterLink,useLocation, useNavigate} from "react-router-dom"
 import { getOrder } from '../redux/Address/action'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
@@ -53,6 +53,7 @@ const [detail,setdetail] = React.useState(cardobj)
 
 const handlechange=(e)=>{
   setdetail({...detail,[e.target.name]:e.target.value})
+
 }
 
 const {cardNum,name,month,year,cvv} = detail
@@ -67,13 +68,15 @@ console.log(detail)
           },[])
 
          const whichdata=()=>{
+         
            if(directBuyData.hasOwnProperty('price')){
                dispatch(FinalOrder1(directBuyData))
            }else{
               dispatch(FinalOrder2(data))
            }
+         
          }
-
+            console.log("DD",directBuyData)
   // <----------------------------------------------------------------------->
    const location = useLocation()
    const selectedAddress = address[location.state.num]
@@ -88,6 +91,8 @@ console.log(detail)
     finalorder[i].Date = date
     finalorder[i].Address = selectedAddress
     delete finalorder[i].Address._id
+    delete finalorder[i].Address._userID
+    delete finalorder[i]._id
    }
 
    console.log("final",finalorder)
@@ -96,7 +101,7 @@ console.log(detail)
      
     
     
-       fetch(`https://long-lime-crab-garb.cyclic.app/order/add`,{
+       fetch(`https://modesens1.onrender.com/order/add`,{
          method:"POST",
          body:JSON.stringify(finalorder),
          headers:{
@@ -127,6 +132,7 @@ console.log(detail)
        const detailtoast = useToast()
 
      const handleclick=()=>{
+    
        
       let count=0
       for(let k in detail){
@@ -152,9 +158,34 @@ console.log(detail)
       }
      }
 
-// <-----------------------------toast after placed order--------------------------------------------------->
+  // <-----------------------------match pin code and toast after placed order--------------------------------------------------->
+
+       
+            let pinobj={
+              a:"",
+              b:"",
+              c:"",
+              d:""
+            }
+            const [v,setv] = React.useState(pinobj)
+
+            const handlepin=(e)=>{
+               setv({...v,[e.target.name]:e.target.value})
+            }
+            const {a,b,c,d} = v
+
+            const navigate=useNavigate()
+
+
 
      const infoOfOderPlaced=()=>{
+      let pin = ""
+      for(let k in v){
+        pin+= v[k]
+      }
+       
+      if(pin=="1234"){
+
       toast({
         title:"your order is placed ..Now you are in your order section",
         duration:5000,
@@ -162,6 +193,18 @@ console.log(detail)
         position:"top"
       })
       onClose()
+      navigate("/order")
+    }else{
+      toast({
+        title:"Entered Pin is wrong",
+        duration:5000,
+        isClosable:true,
+        position:"top"
+      })
+      setv(pinobj)
+      onClose()
+
+    }
 
      }
   
@@ -189,7 +232,10 @@ console.log(detail)
       })
      }
 
- 
+   
+
+   
+  
 
 
   return (
@@ -304,20 +350,20 @@ console.log(detail)
                 <AlertDialogBody>
                    <HStack>
                      <PinInput>
-                       <PinInputField />
-                       <PinInputField />
-                       <PinInputField />
-                       <PinInputField />
+                       <PinInputField name="a"  value={a} onChange={handlepin} />
+                       <PinInputField name="b"  value={b} onChange={handlepin} />
+                       <PinInputField name="c"  value={c} onChange={handlepin} />
+                       <PinInputField name="d"  value={d} onChange={handlepin} />
                        </PinInput>
                     </HStack>
                </AlertDialogBody>
                <AlertDialogFooter>
-                <RouterLink to="/order" >
+                {/* <RouterLink to="/order" > */}
               <Button ref={cancelRef}  bg="black"  color='white'  _hover={{bg:"black",color:"white"}} onClick={infoOfOderPlaced} >
 
                 Done
               </Button>
-              </RouterLink>
+              {/* </RouterLink> */}
             </AlertDialogFooter>
 
            

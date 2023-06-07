@@ -30,6 +30,7 @@ switch(action.type){
   case types.GET_TotalItem:return{
     ...state, totalItem:action.payload,loading:false, error:false,
   }
+  
   case types.GET_Page:
     return{...state, currentPage:action.payload ,loading:false, error:false, }
 
