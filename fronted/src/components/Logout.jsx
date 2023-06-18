@@ -2,7 +2,7 @@ import React from 'react'
 import {useDispatch, useSelector} from "react-redux"
 import {Flex, Box,Popover,PopoverTrigger,PopoverContent,PopoverArrow,Button ,Portal,
   PopoverBody,PopoverCloseButton ,PopoverHeader,Center    } from "@chakra-ui/react"
-  import {doLogout} from "../redux/User/action"
+  import {Name, doLogout} from "../redux/User/action"
   import {BsFillBagCheckFill} from "react-icons/bs"
   import {Link as RouterLink} from "react-router-dom"
 
@@ -20,6 +20,7 @@ const Logout = ({w,h,ml,mt}) => {
 
    const logout=()=>{
       dispatch(doLogout())
+      dispatch(Name(""))
    }
 
    console.log("t",token)

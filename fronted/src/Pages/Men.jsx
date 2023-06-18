@@ -79,7 +79,7 @@ import { CurrentPage, woByBrand, woByCategory, woCurrentPage, woSort } from '../
        dispatch(ByBrand(val))
     }
 
-  
+   console.log(data)
 
 
   return ( 
@@ -226,10 +226,10 @@ import { CurrentPage, woByBrand, woByCategory, woCurrentPage, woSort } from '../
                                                   <AiOutlineHeart   />
                                                </Center> */}
 
-                                               <RouteLink to={`/men/${el._id}`} >
+                                               {/* <RouteLink to={`/men/${el._id}`} > */}
                                                       <Card img={el.Image} title={el.Title} des={el.Name} price={el.price} originalprice={el.Sprice} 
-                                                        arr={el.arr}   />
-                                                </RouteLink>  
+                                                        arr={el.arr} el={el} gender={"men"} i={i} />
+                                                {/* </RouteLink>   */}
 
                                             </GridItem>
                                            

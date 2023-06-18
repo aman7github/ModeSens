@@ -13,17 +13,6 @@ const Order = () => {
       return{
           address:store.addressReducer.address, 
           token:store.addressReducer.token,
-          // pincode:store.cartReducer.pincode,
-          // totalPrice:store.cartReducer.totalPrice,
-          // discount:store.cartReducer.discount,
-          // payableAmount:store.cartReducer.payableAmount,
-          // data:store.cartReducer.data,
-          // directBuyData:store.singlePageReducer.directBuyData,
-          // singleShippingPrice:store.singlePageReducer.singleShippingPrice,
-          // address:store.addressReducer.address,
-          // finalorder:store.singlePageReducer.finalorder,
-          // chooseaddress:store.addressReducer.chooseaddress,
-
           order:store.addressReducer.order
       
         

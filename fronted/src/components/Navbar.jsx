@@ -34,19 +34,19 @@ const Navbar = () => {
 
    const[val,setval] = React.useState("")
 
-   let search;
+   let search="";
 
    const handlechange=(e)=>{
-  //   setval(prev=>e.target.value)
+     setval(prev=>e.target.value)
 
-  //  if(search){
-  //   clearTimeout(search)
-  //  }
-
-  //   search = setTimeout(()=>{
-  //     dispatch(woByCategory(e.target.value))
-  //     },2000)
-
+      if(search){
+          clearTimeout(search)
+      }
+    search = setTimeout(()=>{
+      dispatch(woByCategory(e.target.value))
+      dispatch(ByCategory(e.target.value))
+     },1000)
+    
    }
 
    React.useEffect(()=>{
@@ -55,16 +55,16 @@ const Navbar = () => {
 
  
 
-   },[category])
+   },[])
 
-   console.log(val)
+ 
 
 
 
    const handlemen=()=>{
      // <------when you back to men page all previous filter will remove from women page --------------------------------------------------------------------------------->  
   
-     dispatch(CurrentPage(1))
+      dispatch(CurrentPage(1))
       dispatch(ByCategory(""))
        dispatch(ByBrand(""))
        dispatch(Sort(undefined))
@@ -74,7 +74,7 @@ const Navbar = () => {
    const handlewomen=()=>{
      // <------when you back to women page all previous filter will remove from men page --------------------------------------------------------------------------------->  
   
-    dispatch(woCurrentPage(1))
+     dispatch(woCurrentPage(1))
      dispatch(woByCategory(""))
       dispatch(woByBrand(""))
       dispatch(woSort(undefined))

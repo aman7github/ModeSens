@@ -13,7 +13,7 @@ export const woLoading=()=>{
     }
 }
 
-export const GetSuccess=(payload)=>{
+export const woGetSuccess=(payload)=>{
     return{
         type:types.GET_Women_Success,
         payload
@@ -53,6 +53,14 @@ export const woByBrand=(payload)=>{
         payload
     }
 }
+
+export const woStatus=()=>{
+    return{
+        type:types.GET_Status,
+    }
+}
+
+
 
 // export const PageQuery=(payload)=>{
 //     return{

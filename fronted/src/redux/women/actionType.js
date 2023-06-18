@@ -9,3 +9,5 @@ export const GET_Women_Sort = "get/Women_sort"
 export const GET_Women_Category = "get/Women_category"
 export const GET_Women_Brand = "get/Women_brand"
 export const GET_Women_PageQuery = "get/pagequery"
+
+export const GET_Status = "get/status"

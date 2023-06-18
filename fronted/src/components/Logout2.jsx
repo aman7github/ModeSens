@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {BsFillBagCheckFill} from "react-icons/bs"
 import {Link as RouterLink} from "react-router-dom"
 
-  import {doLogout} from "../redux/User/action"
+  import {Name, doLogout} from "../redux/User/action"
 
 const Logout2 = () => {
 
@@ -17,6 +17,7 @@ const Logout2 = () => {
    
        const logout=()=>{
           dispatch(doLogout())
+          dispatch(Name(""))
        }
     
      

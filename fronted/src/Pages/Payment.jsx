@@ -140,13 +140,43 @@ console.log(detail)
             count++
          }
       }
-
+    
+      
       if(count==5){
+         if(Number(year)>Number(new Date().getFullYear())){   
        addOrder()
        if(directBuyData.hasOwnProperty('price')==false){
         removeFromCartAfterBuy()
        }
        onOpen()
+
+      }
+      else if(Number(year)<Number(new Date().getFullYear())){
+        detailtoast({
+          title:"Year should be greater or equal to current year",
+          duration:3000,
+          isClosable:true,
+          position:"top"
+        })
+
+      }else if(Number(year)==Number(new Date().getFullYear())){
+        if( month>=(new Date().getMonth()+1) ){
+          addOrder()
+          if(directBuyData.hasOwnProperty('price')==false){
+           removeFromCartAfterBuy()
+          }
+          onOpen()
+        }else{
+          detailtoast({
+            title:"Month should be greater or equal to current Year's month",
+            duration:3000,
+            isClosable:true,
+            position:"top"
+          })
+
+        }
+
+      }
       }else{
 
         detailtoast({

@@ -74,10 +74,11 @@ const WishList = () => {
   // <-----------------------------------------Add to Cart------------------------------------>
   const toast = useToast()
   const addToCart=(el)=>{
-  
+    let addedData = {...el,status:!el.status}
+    console.log("wi",el.status)
    fetch(`https://modesens1.onrender.com/cart/add`,{
        method:"POST",
-       body:JSON.stringify(el),
+       body:JSON.stringify(addedData),
        headers:{
          "Content-Type":"application/json",
          "authorization":`${token}`
@@ -104,7 +105,7 @@ const WishList = () => {
 
 
 
-
+ console.log(WishListData)
 
 
 
@@ -126,7 +127,7 @@ const WishList = () => {
 
                     return <GridItem key={i}  border="1px" borderColor={'gray.300'}  >
                              <CartItem  img={el.Image} title={el.Title} name={el.Name} price={el.price} Sprice={el.Sprice} size={el.Size} 
-                               quantity={el.Quantity} btn1={"ADD TO CART"} btn2={"REMOVE"} id={el._id} data={el} remove={remove} addDataWishList={addToCart}  />
+                               quantity={el.Quantity} btn1={"ADD TO CART"} btn2={"REMOVE"} id={el._id} el={el} remove={remove} addDataWishList={addToCart}  />
                            </GridItem>
                 }) 
 

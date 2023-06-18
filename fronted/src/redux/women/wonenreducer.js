@@ -10,7 +10,8 @@ const intialstate={
  currentPage:1,
  sort:undefined,
  category:"",
- brand:""
+ brand:"",
+ status:false
 }
 
 const reducer=(state=intialstate,action)=>{
@@ -44,7 +45,8 @@ switch(action.type){
    case types.GET_Women_Brand:
     return {...state,brand:action.payload,loading:false, error:false}
 
-
+   case types.GET_Status:
+    return {...state,loading:false, error:false,status:!state.status}
 
     default: return state;
      

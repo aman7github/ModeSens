@@ -71,7 +71,7 @@ const Cart = () => {
    const toastWishlist = useToast()
 
    const addDataWishList=(el)=>{
- 
+    let addedData = {...el,status:!el.status}
     fetch(`https://modesens1.onrender.com/wishlist/add`,{
         method:"POST",
         body:JSON.stringify(el),
@@ -105,7 +105,7 @@ const Cart = () => {
 
 
    const remove=(id)=>{
-        
+   
     fetch(`https://modesens1.onrender.com/cart/delete/${id}`,{
         method:"DELETE",
         headers:{
@@ -120,6 +120,7 @@ const Cart = () => {
         dispatch(TotalDiscount())
         dispatch(PayableAmount())
         dispatch(cSuccess(res.data))
+        console.log(res.data)
         //console.log(res)
     })
     .catch((err)=>{
@@ -177,7 +178,7 @@ const Cart = () => {
                 {
                     data.map((el,i)=>{
                        return <CartItem key={i} img={el.Image} title={el.Title} name={el.Name} price={el.price} Sprice={el.Sprice} size={el.Size} 
-                                quantity={el.Quantity}  id={el._id} data={el} btn1={"ADD TO WISHLIST"} btn2={"REMOVE FROM CART"} remove={remove} addDataWishList={addDataWishList} />
+                                quantity={el.Quantity}  id={el._id} el={el} btn1={"ADD TO WISHLIST"} btn2={"REMOVE FROM CART"} remove={remove} addDataWishList={addDataWishList} />
                    })
                 } 
                

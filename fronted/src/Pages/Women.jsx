@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {useDispatch,useSelector} from "react-redux"
-import { woError, GetSuccess, woLoading, woSort, woTotalItem,woByCategory, woByBrand, woCurrentPage, PageQuery} from '../redux/women/action'
+import { woError, woGetSuccess, woLoading, woSort, woTotalItem,woByCategory, woByBrand, woCurrentPage, PageQuery} from '../redux/women/action'
 import {Box, Center,Grid,GridItem, Flex, Text,Image, useToast} from "@chakra-ui/react"
 import Card from '../components/Card'
 import Pagination from '../components/Pagination'
 import Navbar from "../components/Navbar"
 import Route from '../components/Route'
 import Footer from "../components/Footer"
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import {Link as RouteLink} from "react-router-dom"
 import {Like, wSuccess} from "../redux/WishList/action"
 import {AiOutlineHeart,AiFillHeart} from "react-icons/ai"
@@ -22,11 +22,12 @@ import { PayableAmount, TotalDiscount, TotalPrice } from '../redux/Cart/action'
 
 const Women = () => {
 
-  const {wo_loading,wo_error,data,currentPage,sort,category,brand,pageQuery,like} = useSelector((store)=>{
+  const {wo_loading,wo_error,data,woStatus,currentPage,sort,category,brand,pageQuery,like} = useSelector((store)=>{
     return{
         wo_loading:store.womenReducer.loading,
         wo_error:store.womenReducer.error,
         data:store.womenReducer.data,
+        woStatus:store.womenReducer.status,
         currentPage:store.womenReducer.currentPage,
         sort:store.womenReducer.sort,
         category:store.womenReducer.category,
@@ -43,7 +44,7 @@ const Women = () => {
    React.useEffect(()=>{
 
        getWomenData(currentPage,sort,category,brand)
-   },[currentPage,sort,category,brand])
+   },[currentPage,sort,category,brand,like])
 
 
    // useEffect(()=>{
@@ -67,7 +68,7 @@ const Women = () => {
         fetch(`https://modesens1.onrender.com/women/get?sort=price&order=${sort}&page=${currentPage}&category=${category}&brand=${brand}`)
         .then((res)=>res.json())
         .then((res)=>{
-            dispatch(GetSuccess(res.msg))
+            dispatch(woGetSuccess(res.msg))
             dispatch(woTotalItem(res.totalItems)) 
         })
         .catch((err)=>{
@@ -85,26 +86,13 @@ const Women = () => {
     }
 
     const Brand=(val)=>{
+
        dispatch(woByBrand(val))
     }
 
   
 
 
-
-
-  // <------------------------------------------wishlis heart sym-------------------------------->
-       
-       const ref2 = useRef([])
-      //   const [p,setp] = useState(false)
-       
-      //   const hanldeclick=(i)=>{
-      //    setp(prev=>!p)
-      //    ref2.current[i].style.color=p?"black":"red"
-      //    console.log( ref2.current[i])
-       
-        
-      //  }
 
    // <------------------------------------add to wishlist----------------------------------------->
 
@@ -139,13 +127,44 @@ const Women = () => {
      
       //   })
 
+      // }
 
 
 
-
+      // const change=(el)=>{
+      //    fetch(`https://modesens1.onrender.com/wishlist/add`,{
+      //       method:"POST",
+      //       body:JSON.stringify(el),
+      //       headers:{
+      //         "Content-Type":"application/json",
+      //         "authorization":`${token}`
+      //       }
+      //   })
+      //   .then((res)=>res.json())
+      //   .then((res)=>{
+      //     dispatch(TotalPrice())
+      //     dispatch(TotalDiscount())
+      //     dispatch(PayableAmount())
+      //     dispatch(wSuccess(res.data))
+        
+      //       toastWishlist({
+      //         title:res.msg,
+      //         duration:3000,
+      //         isClosable:true,
+      //         position:"top"
+      //       })
+            
+      //   })
+      //   .catch((err)=>{
+      //       console.log(err)
+     
+      //   })
 
       // }
-     
+
+
+
+  
    
   
 
@@ -212,7 +231,7 @@ const Women = () => {
                                          Dress
                                      </Center>
                                      <Center border="1px"   pt="0.4rem" pb="0.4rem" fontSize="1rem" fontWeight={'bold'} bg="black" color="white" borderRadius="0.5rem" 
-                                       cursor={'pointer'} _hover={{bg:"white", color:"black"}} onClick={()=>Category("hats")} >
+                                       cursor={'pointer'} _hover={{bg:"white", color:"black"}} onClick={()=>Category("hat")} >
                                          Hat
                                      </Center>
                                      <Center border="1px"   pt="0.4rem" pb="0.4rem" fontSize="1rem" fontWeight={'bold'} bg="black" color="white" borderRadius="0.5rem" 
@@ -220,11 +239,11 @@ const Women = () => {
                                          Short
                                      </Center>
                                      <Center border="1px"   pt="0.4rem" pb="0.4rem" fontSize="1rem" fontWeight={'bold'} bg="black" color="white" borderRadius="0.5rem" 
-                                       cursor={'pointer'} _hover={{bg:"white", color:"black"}} onClick={()=>Category("pant")} >
-                                         Pant
+                                       cursor={'pointer'} _hover={{bg:"white", color:"black"}} onClick={()=>Category("Trouser")} >
+                                         Trouser
                                      </Center>
                                      <Center border="1px"   pt="0.4rem" pb="0.4rem" fontSize="1rem" fontWeight={'bold'} bg="black" color="white" borderRadius="0.5rem" 
-                                       cursor={'pointer'} _hover={{bg:"white", color:"black"}} onClick={()=>Category("boot")} >
+                                       cursor={'pointer'} _hover={{bg:"white", color:"black"}} onClick={()=>Category("shoe")} >
                                          Shoe
                                      </Center>
                                   </Grid>
@@ -269,8 +288,8 @@ const Women = () => {
                                        KHAITE
                                      </Center>
                                      <Center border="1px"   pt="0.4rem" pb="0.4rem" fontSize="0.9rem" fontWeight={'bold'} bg="black" color="white" borderRadius="0.5rem" 
-                                      cursor={'pointer'}  onClick={()=>Brand("DOLCE & GABBANA")} _hover={{bg:"white", color:"black"}} >
-                                      DOLCE & GABBANA
+                                      cursor={'pointer'}  onClick={()=>Brand("GINGER")} _hover={{bg:"white", color:"black"}} >
+                                      GINGER
                                      </Center>
                                      <Center border="1px"   pt="0.4rem" pb="0.4rem" fontSize="0.9rem" fontWeight={'bold'} bg="black" color="white" borderRadius="0.5rem" 
                                       cursor={'pointer'}  onClick={()=>Brand("MAX MARA")} _hover={{bg:"white", color:"black"}} >
@@ -293,10 +312,10 @@ const Women = () => {
                                                  <BsHeart  cursor={'pointer'}      />
                                                </Center> */}
 
-                                               <RouteLink to={`/women/${el._id}`} >
+                                               {/* <RouteLink to={`/women/${el._id}`} > */}
                                                       <Card   img={el.Image} title={el.Title} des={el.Name} price={el.price} originalprice={el.Sprice} 
-                                                        arr={el.arr}   />
-                                                </RouteLink>  
+                                                        arr={el.arr} el={el} gender={"women"} i={i}   />
+                                                {/* </RouteLink>   */}
 
                                             </GridItem>
                                            
