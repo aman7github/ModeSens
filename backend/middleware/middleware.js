@@ -8,7 +8,7 @@ const token= req.headers.authorization
 
 if(token){
 const decoded = jwt.verify(token,"batman")
- console.log(decoded)
+// console.log(decoded)
   
  if(decoded){
     req.body.userID = decoded.userID

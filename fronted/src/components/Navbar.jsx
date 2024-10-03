@@ -12,7 +12,7 @@ import ButtonSignup from './ButtonSignup'
 import Logout2 from './Logout2'
 import { ByBrand, CurrentPage, Sort ,ByCategory} from '../redux/men/action'
 import { woByBrand, woByCategory, woCurrentPage, woSort } from '../redux/women/action'
-
+import logo from '../images/logo.svg'
 
 const Navbar = () => {
 
@@ -133,7 +133,7 @@ const Navbar = () => {
       {/* <--------------------------------------------------------------------------------->    */}
 
           <Center w={{base:"50%",md:"22%",lg:"25%"}} h="100%"    >
-             <Image src="https://cdn.modesens.com/static/img/20190228newlogo-black.svg" w="85%"  />
+             <Image src={logo} w="85%"  />
           </Center>
 
           <Center  display={{base:"none",lg:"flex"}} justifyContent={'space-between'} w="30%" outline={'none'} >

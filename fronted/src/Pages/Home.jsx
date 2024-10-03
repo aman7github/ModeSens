@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
-import { Center, Image,Box, Text, Flex } from '@chakra-ui/react'
+import { Box, Text } from '@chakra-ui/react'
+import { Image } from '@chakra-ui/react'
 import VideoText from '../components/VideoText'
 import Brand from '../components/Brand'
 import Carousel from '../components/Carousel'
@@ -10,7 +11,9 @@ import Footer from '../components/Footer'
 import { cLoading, cError,cSuccess } from '../redux/Cart/action'
 import { wSuccess,wError,wLoading } from '../redux/WishList/action'
 import {useDispatch, useSelector} from "react-redux"
-import Error from '../components/Error'
+import imgg from '../images/modeImg1.png'
+import secImg from '../images/modeImg2.png'
+import category1 from '../images/category1.png'
 
 
 const Home = () => {
@@ -110,15 +113,18 @@ const Home = () => {
            We are your fashion shopping assitant.
         </Text>
       </Box> 
-       <Image src="https://cdn.modesens.com/static/img/20221009_bg1.png" w="100%" h="100%"/>
+       <Image src={imgg} w="100%" h="100%"/>
+       
     </Box>
+
+        
     
     {/* <-------------------------second container------------------------------------> */} 
 
        <VideoText 
          t1="Check Modesens" t2="Before You Buy" t3="Want to score the best price-on anything-in "
          t4="seconds? Just paste a product link from any" t5="partner retailer into the search bar on our app "
-         t6="or website." src="https://cdn.modesens.com/static/img/20221231bg1_en.png"
+         t6="or website." src={secImg}
        />   
 
     {/* <-------------------------brand container------------------------------------> */} 
@@ -132,7 +138,7 @@ const Home = () => {
        <VideoText 
          t1="Compare 500+ Stores " t2="In One Place " t3="ModeSens allows you to compare prices and "
          t4="availability across hundreds of stores and" t5="thousands of brands."
-         src="https://cdn.modesens.com/static/img/20221231bg3_en.png"
+         src={category1}
        /> 
 
 
@@ -142,7 +148,9 @@ const Home = () => {
 
       <Footer />
       </Box>
+      
     }
+
     </>
   )
 }
