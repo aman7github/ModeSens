@@ -95,6 +95,8 @@ const Home = () => {
     {/* { c_error==true || w_error==true ? <Error /> : */}
    {
     <Box>
+
+
       
     <Navbar />
   {/* <-------------------------first container------------------------------------> */}
