@@ -101,8 +101,14 @@ userroute.delete("/delete/:id",async(req,res)=>{
     
  userroute.post("/login",async(req,res)=>{
     const{email,name,password} = req.body
+   
+  
+    if(email=="" || password==''){
+        res.status(400).send({"msg":"email and password field must be filled"})
+    }else{
 
     try{
+     
         const user = await Usermodel.find({email})
         bcrypt.compare(password,user[0].password,async(err,result)=>{
           
@@ -118,7 +124,9 @@ userroute.delete("/delete/:id",async(req,res)=>{
         res.status(400).send({"msg":err})
     }
 
- })
+    }
+
+ } )
 
 
 module.exports={
