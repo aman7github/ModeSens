@@ -47,14 +47,11 @@ const Login = () => {
        setval({...val, [e.target.name]:e.target.value})
       }
       const {email,password} = val
-
  
      // <---------------------------------login---------------------------------------------> 
                
                  const toast = useToast()
-                 const location = useLocation()
-                //  const url =location.state.url
-              
+  
                  const navigate=useNavigate()
 
                  const login=()=>{
@@ -98,7 +95,7 @@ const Login = () => {
                         })
 
                       }
-                      
+
 
                  }  
              
