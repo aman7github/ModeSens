@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import {Box, Center,Grid,GridItem, Flex, Text, Input,InputGroup,InputRightElement,Button,useToast,
   Popover,PopoverTrigger,PopoverContent,PopoverArrow                                    } from "@chakra-ui/react"
 import {GiShoppingBag} from "react-icons/gi"
@@ -17,8 +17,11 @@ const Login = () => {
     const handleClick = () => setShow(!show)
 
     const dispatch = useDispatch()
+ 
 
-    const {name,token,res} = useSelector(store=>{
+  
+
+    const {token,res} = useSelector(store=>{
         return{
           
             name:store.userReducer.name,
@@ -26,6 +29,7 @@ const Login = () => {
           
         }
     })
+  
 
      
 
@@ -54,6 +58,16 @@ const Login = () => {
                  const navigate=useNavigate()
 
                  const login=()=>{
+                     if(val.email==''||val.password==''){
+                      toast({
+                        title:"email and password both field must be filled",
+                        duration:3000,
+                        isClosable:true,
+                        position:"top"
+                      })
+                     }else{
+
+
                       fetch(`https://modesens1.onrender.com/user/login`,{
                          method:"POST",
                          body:JSON.stringify(val),
@@ -83,7 +97,9 @@ const Login = () => {
                       
                         })
 
-        
+                      }
+                      
+
                  }  
              
                 
@@ -211,7 +227,8 @@ const Login = () => {
                        </InputGroup>
 
                        {/* <RouterLink  to={`${location.state.url}`} > */}
-                       <Button    w="55%" m="auto" mt="2rem" bg="black" h="3.3rem" color="white" borderRadius={'0'} fontSize="1.1rem"_hover={{bg:"black",color:"white",border:"1px"}} onClick={login} >
+                       <Button    w="55%" m="auto" mt="2rem" bg="black" h="3.3rem" color="white" borderRadius={'0'} fontSize="1.1rem"
+                                  _hover={{bg:"#2f3639",color:"white",border:"1px"}} onClick={login} >
                         
                           LOG IN
                         

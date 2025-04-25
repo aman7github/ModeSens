@@ -10,8 +10,6 @@ import Footer from "../components/Footer"
 import {Link as RouterLink} from "react-router-dom"
 import { DirectBuy } from '../redux/SingleProduct/action'
 import Loader from '../components/Loader'
-import Error from '../components/Error'
-import Route from "../components/Route"
 
 const Cart = () => {
 

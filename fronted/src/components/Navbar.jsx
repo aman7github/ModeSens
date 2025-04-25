@@ -15,7 +15,6 @@ import { woByBrand, woByCategory, woCurrentPage, woSort } from '../redux/women/a
 import logo from '../images/logo.svg'
 
 const Navbar = () => {
-
   const {token,data,wdata,totalCartItem,WishListData,name,totalWishListItem,category} = useSelector(store=>{
     return{
         token:store.userReducer.token,

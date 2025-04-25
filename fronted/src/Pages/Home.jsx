@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
-import { Box, Text } from '@chakra-ui/react'
+import { Box, Text, useBreakpointValue } from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react'
 import VideoText from '../components/VideoText'
 import Brand from '../components/Brand'
@@ -14,6 +14,9 @@ import {useDispatch, useSelector} from "react-redux"
 import imgg from '../images/modeImg1.png'
 import secImg from '../images/modeImg2.png'
 import category1 from '../images/category1.png'
+import mod3 from '../images/mod3.png'
+import mod2 from '../images/mod2.png'
+
 
 
 const Home = () => {
@@ -90,6 +93,8 @@ const Home = () => {
   
 },[])
 
+const imageSrc = useBreakpointValue({ base:mod3,sm:mod2, md: imgg });
+
   return (
     <>
     {/* { c_error==true || w_error==true ? <Error /> : */}
@@ -115,7 +120,16 @@ const Home = () => {
            We are your fashion shopping assitant.
         </Text>
       </Box> 
-       <Image src={imgg} w="100%" h="100%"/>
+       {/* <Image src={imgg} w="100%" h="100%"   /> */}
+
+  
+
+  {/* Separate image with different width, position it as needed */}
+         <Image src={imageSrc}     w='100%' h='100%'  />
+
+
+
+
        
     </Box>
 

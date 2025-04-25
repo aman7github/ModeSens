@@ -67,20 +67,15 @@ const Card = ({img,title ,des,price,originalprice,arr,el,gender,i}) => {
    const go=(el,gender)=>{
        navigate(`/${gender}/${el._id}`)
    }
-  
    const all=(el)=>{
         invoke()
         go(el,gender)
         
    }
-
    const updateStatusOnData=(el,gender)=>{
         console.log(el.status)
-         let updatedData = {...el,status:!el.status}
-          
+         let updatedData = {...el,status:!el.status}     
           delete updatedData._id
-          
-     
         fetch(`https://modesens1.onrender.com/${gender}/update/${el._id}`,{
             method:"PATCH",
             body:JSON.stringify(updatedData),
@@ -105,8 +100,6 @@ const Card = ({img,title ,des,price,originalprice,arr,el,gender,i}) => {
             console.log(err)
      
         })
-
-    
    }
 
 
@@ -235,4 +228,5 @@ const Card = ({img,title ,des,price,originalprice,arr,el,gender,i}) => {
 
 
 export default Card
+
 
