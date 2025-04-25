@@ -5,7 +5,7 @@ import {Link as RouteLink} from "react-router-dom"
 const ButtonSignup = () => {
   return (
     <>
-    
+  
         <Center h="3rem" ml={{base:"0.4rem",sm:"0.3rem"}}   >
           <RouteLink to="/login"  > 
              Signup/Signin
@@ -15,5 +15,7 @@ const ButtonSignup = () => {
     </>
   )
 }
+
+
 
 export default ButtonSignup
