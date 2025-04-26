@@ -102,11 +102,23 @@ userroute.delete("/delete/:id",async(req,res)=>{
  userroute.post("/login",async(req,res)=>{
     const{email,name,password} = req.body
    
-  
+//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+//     else if(!emailRegex){
+
+//         res.status(400).json({ error: "Invalid email format." });
+//    } 
+
+
+
+
+
+
+   
     if(email=="" || password==''){
         res.status(400).send({"msg":"email and password field must be filled"})
     }else{
-
     try{
      
         const user = await Usermodel.find({email})
@@ -115,13 +127,13 @@ userroute.delete("/delete/:id",async(req,res)=>{
             if(result){
                 res.status(200).send({"msg":`Welcome.. ${user[0].name} you are logged In `,"name":user[0].name, "token": jwt.sign({"userID":user[0]._id}, "batman") })
             }else{
-                res.status(400).send({"msg":err.message})
+                res.status(400).send({"msg":"ui"})
             }
            
         })
     }
     catch(err){
-        res.status(400).send({"msg":err})
+        res.status(400).send({"msg":"Not a registered user. Signup first!"})
     }
 
     }
