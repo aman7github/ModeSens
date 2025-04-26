@@ -79,7 +79,7 @@ const Login = () => {
                             duration: 3000,
                             isClosable: true,
                             render: () => (
-                              <Box color="white" fontSize={'1.1rem'} fontWeight={700} p={3} bg="red" borderRadius="md">
+                              <Box color="white" fontSize={'1.1rem'} fontWeight={700} p={3} bg="rgb(192,0,0)" borderRadius="md">
                                 {errorMessage}
                               </Box>
                             )

@@ -477,6 +477,7 @@ const Women = () => {
 
   const Category = (val) => {
     dispatch(woByCategory(val));
+    dispatch(woByBrand(""))
     if (window.innerWidth <= 500) {
       onClose();  //  Close the drawer after sorting
     }

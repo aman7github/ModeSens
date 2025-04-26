@@ -40,7 +40,7 @@ const Logout2 = () => {
         </Flex>
         </RouterLink>
 
-        <Center ml="-2rem" mt='0.1rem'  fontSize={'1.2rem'} onClick={logout}  >
+        <Center ml="-1.3rem" mt='0.1rem'  fontSize={'1.2rem'} onClick={logout}  >
              Logout
         </Center>
        

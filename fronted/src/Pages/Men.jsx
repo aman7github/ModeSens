@@ -56,6 +56,7 @@ const Men = () => {
 
   const Category = (val) => {
     dispatch(ByCategory(val));
+    dispatch(ByBrand(""));
     if (window.innerWidth <= 500) {
       onClose();  //  Close the drawer after sorting
     }
