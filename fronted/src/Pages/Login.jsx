@@ -1,6 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import {Box, Center,Grid,GridItem, Flex, Text, Input,InputGroup,InputRightElement,Button,useToast,
-  Popover,PopoverTrigger,PopoverContent,PopoverArrow                                    } from "@chakra-ui/react"
+import {Box, Center,Grid,GridItem, Flex, Text, Input,InputGroup,InputRightElement,Button,useToast} from "@chakra-ui/react"
 import {GiShoppingBag} from "react-icons/gi"
 import {BsFillBellFill,BsBagDashFill,BsFillTrophyFill} from "react-icons/bs"
 import {AiFillHeart,AiOutlineEye,AiOutlineEyeInvisible,AiFillHome,AiOutlineHome} from "react-icons/ai"
@@ -23,7 +22,6 @@ const Login = () => {
 
     const {token,res} = useSelector(store=>{
         return{
-          
             name:store.userReducer.name,
             token:store.userReducer.token
           
@@ -55,14 +53,7 @@ const Login = () => {
                  const navigate=useNavigate()
 
                  const login=()=>{
-                     if(val.email==''||val.password==''){
-                      toast({
-                        title:"email and password both field must be filled",
-                        duration:3000,
-                        isClosable:true,
-                        position:"top"
-                      })
-                     }else{
+               
 
 
                       fetch(`https://modesens1.onrender.com/user/login`,{
@@ -89,12 +80,22 @@ const Login = () => {
  
                         }
                         ).catch((err)=>{
-                           console.log(err)
-                          
+                          toast({
+                            position: "top",
+                            duration: 3000,
+                            isClosable: true,
+                            render: () => (
+                              <Box color="white" p={3} bg="red" borderRadius="md">
+                                {err.msg}
+                              </Box>
+                            )
+    
+    
+                          })
                       
                         })
 
-                      }
+                     // }
 
 
                  }  

@@ -1,11 +1,14 @@
 import * as types from "./actionType"
 
 
+
+
 export const woError = ()=>{
     return{
         type:types.GET_Women_Error
     }
 }
+
 
 export const woLoading=()=>{
     return{
@@ -28,6 +31,9 @@ export const woTotalItem=(payload)=>{
 }
 
 
+
+
+
 export const woCurrentPage=(payload)=>{
     return{
         type:types.GET_Page,
@@ -35,18 +41,26 @@ export const woCurrentPage=(payload)=>{
     }
 }
 
-export const woSort=(payload)=>{
+
+
+
+ export const woSort=(payload)=>{
     return{
         type:types.GET_Women_Sort,
         payload
     }
 }
+
+
+
 export const woByCategory=(payload)=>{
     return{
         type:types.GET_Women_Category,
         payload
     }
 }
+
+
 export const woByBrand=(payload)=>{
     return{
         type:types.GET_Women_Brand,

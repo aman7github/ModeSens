@@ -98,7 +98,7 @@ const Navbar = () => {
             <MenuList  >
             <MenuItem fontSize="1.2rem" onClick={handlewomen}  >  <RouteLink to="/women" > WOMEN </RouteLink>  </MenuItem>
             <MenuItem  fontSize="1.2rem" onClick={handlemen}  >  <RouteLink to="/men" > MEN </RouteLink>      </MenuItem>
-            <MenuItem  fontSize="1.2rem"  >KIDS</MenuItem>
+    
             <MenuItem fontSize="1.2rem" >  <RouteLink to="/" > HOME </RouteLink>  </MenuItem>
             <MenuItem>
               <RouteLink to="/cart">
@@ -138,7 +138,7 @@ const Navbar = () => {
           <Center  display={{base:"none",lg:"flex"}} justifyContent={'space-between'} w="30%" outline={'none'} >
                 <RouteLink to="/women" onClick={handlewomen} > <Box>WOMEN</Box>  </RouteLink>
                 <RouteLink to="/men" onClick={handlemen} > <Box   >MEN</Box>   </RouteLink>
-                <RouteLink><Box>KIDS</Box>  </RouteLink>
+             
                 <RouteLink to="/" >HOME</RouteLink>
           </Center>
 
