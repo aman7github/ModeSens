@@ -51,10 +51,53 @@ const Payment = () => {
 
 const [detail,setdetail] = React.useState(cardobj)
 
-const handlechange=(e)=>{
-  setdetail({...detail,[e.target.name]:e.target.value})
+// const handlechange=(e)=>{
+//   setdetail({...detail,[e.target.name]:e.target.value})
 
-}
+// }
+
+const handlechange = (e) => {
+  let { name, value } = e.target;
+
+  if (name === "name") {
+    // Allow only letters and spaces
+    value = value.replace(/[^a-zA-Z\s]/g, '');
+  }
+
+  if (name === "cardNumber") {
+    // Allow only numbers, and max 12 digits
+    value = value.replace(/[^0-9]/g, '');
+    if (value.length > 12) {
+      value = value.slice(0, 12);
+    }
+  }
+
+  if (name === "cvv") {
+    // Allow only numbers, and max 3 digits
+    value = value.replace(/[^0-9]/g, '');
+    if (value.length > 3) {
+      value = value.slice(0, 3);
+    }
+  }
+
+  setdetail({ ...detail, [name]: value });
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const {cardNum,name,month,year,cvv} = detail
 console.log(detail)
@@ -283,7 +326,7 @@ console.log(detail)
                         Card Number
                     </Box>
 
-                     <Input ml="1rem"  w="55%" type="text" name="cardNum" value={cardNum} onChange={handlechange} />
+                     <Input ml="1rem"  w="55%" type='number' name="cardNum" value={cardNum} onChange={handlechange} />
                 </Flex>
 
                 <Flex w={{base:"100%",sm:"90%"}} m="auto" mt="1rem" justifyContent={'center'}  >

@@ -185,7 +185,7 @@ const Signup = () => {
 
                       <RouterLink to="/login"  state={window.location.pathname} >
                        <Center fontSize={'1.1rem'} mt="4rem" color="gray" textDecoration={'underline'} >
-                         Already have an account? Please for sign in <Box color="rgb(192,0,0)" ml="0.3rem" > click here</Box>
+                         Already have an account? for sign in <Box color="rgb(192,0,0)" ml="0.3rem" > click here</Box>
                        </Center>
                       </RouterLink>
 

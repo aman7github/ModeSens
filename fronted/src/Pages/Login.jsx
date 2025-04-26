@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux"
 import { Name, Root, Success, Token } from '../redux/User/action'
 import {useNavigate   } from "react-router-dom"
 import Logout from "../components/Logout"
+import axios from "axios";
 
 
 const Login = () => {
@@ -54,39 +55,32 @@ const Login = () => {
 
                  const login=()=>{
                
+                   
+                      axios.post("https://modesens1.onrender.com/user/login", val)
 
-
-                      fetch(`https://modesens1.onrender.com/user/login`,{
-                         method:"POST",
-                         body:JSON.stringify(val),
-                         headers:{
-                            "Content-Type":"application/json"
-                         }
-                      }).then(res=>res.json())
                         .then((res)=>{
-                            dispatch(Token(res.token))
-                            dispatch(Name(res.name))
-                         
-                          
-                              
+                          const data = res.data;
+                            dispatch(Token(data.token))
+                            dispatch(Name(data.name))
+  
                             toast({
-                              title:res.msg,
+                              title:data.msg,
                               duration:3000,
                               isClosable:true,
                               position:"top"
                             })
-
                             navigate("/")
  
                         }
                         ).catch((err)=>{
+                          const errorMessage = err.response?.data?.msg || "Something went wrong";
                           toast({
                             position: "top",
                             duration: 3000,
                             isClosable: true,
                             render: () => (
-                              <Box color="white" p={3} bg="red" borderRadius="md">
-                                {err.msg}
+                              <Box color="white" fontSize={'1.1rem'} fontWeight={700} p={3} bg="red" borderRadius="md">
+                                {errorMessage}
                               </Box>
                             )
     
@@ -102,12 +96,7 @@ const Login = () => {
              
                 
 
-        
-              
-            
-             
-
-            console.log("l",token)
+  
        
          
  
@@ -238,7 +227,7 @@ const Login = () => {
 
                       <RouterLink to="/signup" >
                        <Center fontSize={'1.1rem'} mt="4rem" color="gray" textDecoration={'underline'} >
-                         Don't have an account? Please for sign up <Box color="rgb(192,0,0)" ml="0.3rem" > click here</Box>
+                         Don't have an account? for sign up <Box color="rgb(192,0,0)" ml="0.3rem" > click here</Box> 
                        </Center>
                       </RouterLink>
 

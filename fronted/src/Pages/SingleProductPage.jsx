@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { sError, sLoading, QuantityDec, QuantityInc, sSuccess } from '../redux/SingleProduct/action'
 import {useDispatch, useSelector} from "react-redux"
 import Navbar from '../components/Navbar'
-import { Flex,Box, Text,Center, SimpleGrid,Image, VStack, useToast, Button   } from '@chakra-ui/react'
+import { Flex,Box, Text,Center, SimpleGrid,Image, VStack, useToast, Button,useBreakpointValue   } from '@chakra-ui/react'
 import {AiOutlineHeart} from "react-icons/ai"
 import S from '../components/S'
 import Route from "../components/Route"
@@ -12,10 +12,8 @@ import {PostCart, cSuccess} from "../redux/Cart/action"
 import { wSuccess } from '../redux/WishList/action'
 import {Link as RouterLink} from "react-router-dom"
 import Loader from '../components/Loader'
-import { mError, mLoading } from '../redux/men/action'
-import { woError, woLoading } from '../redux/women/action'
-import Error from '../components/Error'
-
+import modpic88 from '../images/modpic88.png'
+import modpic89 from '../images/modpic89.png'
 
 const SingleProductPage = () => {
   // <--------------------------------Catch dynamically men or women data for singledata----------------->
@@ -222,13 +220,13 @@ const addToWishList=()=>{
 }
 
 
-
+const imageSrc = useBreakpointValue({base:modpic89, md: modpic88 });
 
 
 
 
 const gender=window.location.pathname.toString().split("/")
-console.log(gender[1],id)
+
 
   return (
     <>
@@ -323,7 +321,7 @@ console.log(gender[1],id)
         </Text>
        
       </Box> 
-       <Image src="https://modesens.com/banner/16375/getimg/?img=%2Fbanner%2F20230526-modesens-Tessabit-1440x250.jpg?w=1140" w="100%" h="100%"/>
+       <Image src={imageSrc} w="100%" h="100%"/>
     </Box>
 
 
