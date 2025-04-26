@@ -6,7 +6,7 @@ const ButtonSignup = () => {
   return (
     <>
   
-        <Center h="3rem"  fontSize={'1.3rem'} mt='-0.2rem' fontWeight={400}   >
+        <Center h="3rem"  fontSize={'1.3rem'} mt='-0.9rem' fontWeight={400}   >
           <RouteLink to="/login"  > 
              Signup/Signin
           </RouteLink> 
