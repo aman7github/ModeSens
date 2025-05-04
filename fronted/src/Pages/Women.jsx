@@ -454,19 +454,40 @@ const Women = () => {
     getWomenData(currentPage, sort, category, brand);
   }, [currentPage, sort, category, brand]);
 
-  const getWomenData = (currentPage, sort, category, brand) => {
-    dispatch(woLoading());
-    fetch(`https://modesens1.onrender.com/women/get?sort=price&order=${sort}&page=${currentPage}&category=${category}&brand=${brand}`)
-      .then((res) => res.json())
-      .then((res) => {
-        dispatch(woGetSuccess(res.msg));
-        dispatch(woTotalItem(res.totalItems));
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch(woError());
-      });
-  };
+  // const getWomenData = (currentPage, sort, category, brand) => {
+  //   dispatch(woLoading());
+    
+  //   fetch(`https://modesens1.onrender.com/women/get?sort=price&order=${sort}&page=${currentPage}&category=${category}&brand=${brand}`)
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       dispatch(woGetSuccess(res.msg));
+  //       dispatch(woTotalItem(res.totalItems));
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       dispatch(woError());
+  //     });
+  // };
+
+
+   const getWomenData=(currentPage,sort,category)=>{
+        dispatch(woLoading())
+        //https://modesens1.onrender.com/women/get
+        fetch(`https://modesens1.onrender.com/women/get?sort=price&order=${sort}&page=${currentPage}&category=${category}&brand=${brand}`)
+        .then((res)=>res.json())
+        .then((res)=>{
+            dispatch(woGetSuccess(res.msg))
+            dispatch(woTotalItem(res.totalItems)) 
+        })
+        .catch((err)=>{
+            console.log(err)
+            dispatch(woError())
+        })
+   }
+
+
+
+
 
   const Sortbyprice = (val) => {
     dispatch(woSort(val));
@@ -477,6 +498,8 @@ const Women = () => {
 
   const Category = (val) => {
     dispatch(woByCategory(val));
+    console.log('cat',val);
+    
     dispatch(woByBrand(""))
     if (window.innerWidth <= 500) {
       onClose();  //  Close the drawer after sorting
@@ -485,6 +508,7 @@ const Women = () => {
 
   const Brand = (val) => {
     dispatch(woByBrand(val));
+    dispatch(woByCategory(''))
     if (window.innerWidth <= 500) {
       onClose();  // Close the drawer after sorting
     }
@@ -537,9 +561,9 @@ const Women = () => {
           </Center>
         </Flex>
         <Grid mt="0.7rem" templateColumns={{ base: "repeat(1,1fr)", lg: "repeat(2,1fr)" }} gap="1rem">
-          {["Dresses", "Heels", "Tops", "Jeans", "Handbags", "Skirts"].map((item) => (
+          {["dress", "shoe", "Tops", "hat", "Handbags", "Trouser"].map((item) => (
             <Center key={item} border="1px" pt="0.4rem" pb="0.4rem" fontWeight={'bold'} fontSize="1rem" bg="black" color="white" borderRadius="0.5rem"
-              cursor={'pointer'} _hover={{ bg: "white", color: "black" }} onClick={() => Category(item)}>
+              cursor={'pointer'} _hover={{ bg: "white", color: "black" }}  onClick={()=>Category(item)} >
               {item}
             </Center>
           ))}
