@@ -79,18 +79,7 @@ cartapp.delete("/delete/:id",async(req,res)=>{
     const {id} = req.params
    // const token = req.headers.authorization
 try{
-    // if(token){
-    //     const decode = jwt.verify(token,"batman")
-    //     if(decode){
-    //        //await Cartmodel.deleteMany()  // if you want delete all data at once
-    //        await Cartmodel.findByIdAndDelete({_id:id})
-    //        const data = await Cartmodel.find({"userID":decode.userID})
-    //        res.status(200).send({"msg":"data is deleted",'data':data})
-
-    //     }
-    // }else{
-    //     res.status(400).send({"msg":"login first"}) 
-    // }
+   
 
               await Cartmodel.findByIdAndDelete({_id:id})
               const data = await Cartmodel.find({"userID":req.body.userID})

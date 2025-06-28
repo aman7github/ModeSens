@@ -38,6 +38,8 @@ if(category){
 }
 
 
+
+
 var customsort;
   if(sort==undefined){
      customsort={}
@@ -102,26 +104,26 @@ try{
 
  // <------------------------------if you want delete all data at once----------------->
 
-menapp.delete("/delete",async(req,res)=>{ 
-try{
-  await Menmodel.deleteMany() 
- res.status(200).send({"msg":"data is deleted"})
-}catch(err){
-    res.status(200).send({"msg":err.message}) 
-}
-})
+// menapp.delete("/delete",async(req,res)=>{ 
+// try{
+//   await Menmodel.deleteMany() 
+//  res.status(200).send({"msg":"data is deleted"})
+// }catch(err){
+//     res.status(200).send({"msg":err.message}) 
+// }
+// })
 
  // <------------------------------if you want delete single data ----------------->
 
-menapp.delete("/delete/:id",async(req,res)=>{
-    const {id} = req.params
-try{
- await Menmodel.findByIdAndDelete({_id:id})
- res.status(200).send({"msg":"data is deleted"})
-}catch(err){
-    res.status(200).send({"msg":err.message}) 
-}
-})
+// menapp.delete("/delete/:id",async(req,res)=>{
+//     const {id} = req.params
+// try{
+//  await Menmodel.findByIdAndDelete({_id:id})
+//  res.status(200).send({"msg":"data is deleted"})
+// }catch(err){
+//     res.status(200).send({"msg":err.message}) 
+// }
+// })
 
 
 

@@ -116,27 +116,27 @@ womenapp.patch("/update/:id",async(req,res)=>{
 
 //<---------------- if you want delete all data at once--------------------->
 
-womenapp.delete("/delete",async(req,res)=>{
+// womenapp.delete("/delete",async(req,res)=>{
    
-try{
- await Womenmodel.deleteMany()  
- res.status(200).send({"msg":"data is deleted"})
-}catch(err){
-    res.status(400).send({"msg":err.message}) 
-}
-})
+// try{
+//  await Womenmodel.deleteMany()  
+//  res.status(200).send({"msg":"data is deleted"})
+// }catch(err){
+//     res.status(400).send({"msg":err.message}) 
+// }
+// })
 
 //<---------------- if you want delete one data at a time--------------------->
 
-womenapp.delete("/delete/:id",async(req,res)=>{
-    const {id} = req.params
-try{
- await Womenmodel.findByIdAndDelete({_id:id})
- res.status(200).send({"msg":"data is deleted"})
-}catch(err){
-    res.status(400).send({"msg":err.message}) 
-}
-})
+// womenapp.delete("/delete/:id",async(req,res)=>{
+//     const {id} = req.params
+// try{
+//  await Womenmodel.findByIdAndDelete({_id:id})
+//  res.status(200).send({"msg":"data is deleted"})
+// }catch(err){
+//     res.status(400).send({"msg":err.message}) 
+// }
+// })
 
 
 
